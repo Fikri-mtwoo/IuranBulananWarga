@@ -3,7 +3,17 @@
 
 <!-- Page Heading -->
 <h1 class="h3 mb-4 text-gray-800">Akun Pengguna</h1>
-   
+<div class="row">
+  <div class="col-md-12">
+    <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="#">Home</a></li>
+      <li class="breadcrumb-item"><a href="<?=base_url('Admin/dataakunpengguna')?>">Pengguna</a></li>
+      <li class="breadcrumb-item active" aria-current="page">AkunPengguna</li>
+    </ol>
+    </nav>
+  </div>
+</div>     
  <!-- Content Row -->
  <div class="row justify-content-md-center">
      <div class="col-md-6 col-md-auto">

@@ -95,7 +95,7 @@ class Admin extends CI_Controller {
             }
         }
     }
-
+//menu pengguna
     public function akunpengguna(){
         if(!$this->session->userdata('status')){
             redirect(base_url('Auth/admin'));
@@ -291,7 +291,7 @@ class Admin extends CI_Controller {
         echo json_encode($data);
     }
 
-
+//menu pengguna
     public function dataakunpengguna(){
         if(!$this->session->userdata('status')){
             redirect(base_url('Auth/admin'));
@@ -308,9 +308,15 @@ class Admin extends CI_Controller {
     public function update_data_pengguna(){
         $id = $this->input->post('id_pengguna', true);
         $username_pengguna = $this->input->post('username_pengguna', true);
+        $password_lama = $this->input->post('password_lama_pengguna', true);
         $password_baru = $this->input->post('password_baru_pengguna', true);
-        $password_baru = password_hash($password_baru, PASSWORD_BCRYPT);
         
+        
+        if($password_baru == ''){
+            $password_baru = $password_lama;
+        }else{
+            $password_baru = password_hash($password_baru, PASSWORD_BCRYPT);
+        }
         $data = array(
             'NIK'=>$username_pengguna,
             'PasswordPengguna'=>$password_baru

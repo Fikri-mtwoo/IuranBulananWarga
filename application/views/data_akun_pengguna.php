@@ -3,14 +3,23 @@
 
 <!-- Page Heading -->
 <h1 class="h3 mb-4 text-gray-800">Data Pengguna</h1>
-   
+<div class="row">
+  <div class="col-md-12">
+    <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="#">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Pengguna</li>
+    </ol>
+    </nav>
+  </div>
+</div>   
  <!-- Content Row -->
  <div class="row justify-content-md-center">
      <div class="col-md-12 col-md-auto">
      <div class="flashpengguna" data-notif="<?=$this->session->userdata('flash')?>"></div>
         <div class="card">
             <div class="card-header">
-                Data Pengguna
+                <a href="<?=base_url('Admin/akunpengguna')?>" class="btn btn-success">Tambah data</a>
             </div>
             <div class="card-body">
                 <div class="row">
@@ -53,6 +62,7 @@
                         <div class="form-group col-md-6">
                         <label for="password_baru_pengguna">Password Baru</label>
                         <input type="text" name="password_baru_pengguna" class="form-control" id="password_baru_pengguna">
+                        <input type="hidden" name="password_lama_pengguna">
                         </div>
                     </div>
         </div>
