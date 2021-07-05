@@ -3,14 +3,23 @@
 
 <!-- Page Heading -->
 <h1 class="h3 mb-4 text-gray-800">Data Petugas</h1>
-   
+<div class="row">
+  <div class="col-md-12">
+    <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="#">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Petugas</li>
+    </ol>
+    </nav>
+  </div>
+</div>
  <!-- Content Row -->
  <div class="row justify-content-md-center">
      <div class="col-md-12 col-md-auto">
      <div class="flashpetugas" data-notif="<?=$this->session->userdata('flash')?>"></div>
         <div class="card">
             <div class="card-header">
-                Data Petugas
+                <a href="<?=base_url('Admin/akunpetugas')?>" class="btn btn-success">Tambah Data</a>
             </div>
             <div class="card-body">
                 <div class="row">

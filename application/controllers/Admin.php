@@ -48,7 +48,7 @@ class Admin extends CI_Controller {
             }
         }
     }
-
+//menu petugas
     public function akunpetugas(){
         if(!$this->session->userdata('status')){
             redirect(base_url('Auth/admin'));
