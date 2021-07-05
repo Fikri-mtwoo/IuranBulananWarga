@@ -2,7 +2,9 @@
 <div class="container-fluid">
 
 <!-- Page Heading -->
-<h1 class="h3 mb-4 text-gray-800">Data Warga</h1>
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+  <h1 class="h3 mb-0 text-gray-800">Data Warga</h1>
+</div>
    
  <!-- Content Row -->
  <div class="row justify-content-md-center">
@@ -11,7 +13,7 @@
      <div class="flash" data-notif="<?=$this->session->userdata('flash')?>"></div>
         <div class="card">
             <div class="card-header">
-                Data Warga
+                <a href="<?=base_url('Admin/admin')?>" class="btn btn-success">Tambah Warga</a>
             </div>
             <div class="card-body">
                 <div class="row">
@@ -22,7 +24,6 @@
                         <th scope="col">No</th>
                         <th scope="col">Nomor Induk Keluarga(NIK)</th>
                         <th scope="col">Nama Warga</th>
-                        <th scope="col">Nomor Rumah</th>
                         <th scope="col">Edit</th>
                         <th scope="col">Delete</th>
                       </tr>
@@ -43,15 +44,10 @@
         </div>
         <div class="modal-body">
         <form action="<?=base_url('Admin/update_data_warga')?>" method="post" >
-                    <div class="form-row">
-                        <div class="form-group col-md-9">
+                    <input type="hidden" name="idwarga" id="idwarga">
+                    <div class="form-group">
                         <label for="nik">NIK Warga</label>
                         <input type="text" name="nik" class="form-control" id="nik">
-                        </div>
-                        <div class="form-group col-md-3">
-                        <label for="rumah">No.Rumah</label>
-                        <input type="number" name="no_rumah" class="form-control" id="rumah">
-                        </div>
                     </div>
                     <div class="form-group">
                         <label for="nama">Nama Warga</label>

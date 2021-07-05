@@ -22,9 +22,8 @@ class Datatables extends CI_Controller {
             $row[] = $no;
             $row[] = $field->NIK;
             $row[] = $field->Nama;
-            $row[] = $field->NoRumah;
-            $row[] = "<button type='button' class='btn btn-primary btnEdit' data-id='".$field->NIK."'>Edit</button>";
-            $row[] = "<button type='button' class='btn btn-danger btnHapus' data-id='".$field->NIK."'>Hapus</button>";
+            $row[] = "<button type='button' class='btn btn-primary btnEdit' data-id='".$field->IdWarga."'>Edit</button>";
+            $row[] = "<button type='button' class='btn btn-danger btnHapus' data-id='".$field->IdWarga."'>Hapus</button>";
 
             $data[] = $row;
         }

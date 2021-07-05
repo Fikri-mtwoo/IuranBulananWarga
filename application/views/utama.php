@@ -14,18 +14,12 @@
             </div>
             <div class="card-body">
                 <form action="" method="post">
-                    <div class="form-row">
-                        <div class="form-group col-md-9">
+                    <div class="form-group">
                         <label for="nik">NIK Warga</label>
                         <input type="text" name="nik" class="form-control" id="nik">
                         <?=form_error('nik')?>
-                        </div>
-                        <div class="form-group col-md-3">
-                        <label for="rumah">No.Rumah</label>
-                        <input type="number" name="no_rumah" class="form-control" id="rumah">
-                        <?=form_error('no_rumah')?>
-                        </div>
                     </div>
+                        
                     <div class="form-group">
                         <label for="nama">Nama Warga</label>
                         <input type="text" name="nama" class="form-control" id="nama">

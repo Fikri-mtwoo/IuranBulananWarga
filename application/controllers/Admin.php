@@ -10,7 +10,7 @@ class Admin extends CI_Controller {
         $this->load->library('form_validation');
         $this->load->model('vmsModel','vms');
     }
-
+//menu warga
     public function admin(){
         if(!$this->session->userdata('status')){
             redirect(base_url('Auth/admin'));
@@ -23,7 +23,6 @@ class Admin extends CI_Controller {
         }
 
         $this->form_validation->set_rules('nik','NIK','trim|required|max_length[16]|is_unique[tablewarga.nik]');
-        $this->form_validation->set_rules('no_rumah','No.Rumah','trim|required');
         $this->form_validation->set_rules('nama','Nama Warga','trim|required');
 
         $this->form_validation->set_error_delimiters('<small class="text-danger">', '</small>');
@@ -32,11 +31,9 @@ class Admin extends CI_Controller {
         }else{
             $nik = $this->input->post('nik', true);
             $nama = $this->input->post('nama', true);
-            $no_rumah = $this->input->post('no_rumah', true);
             $data = array(
                 'NIK'=>$nik,
-                'Nama'=>$nama,
-                'NoRumah'=>$no_rumah
+                'Nama'=>$nama
             );
             if($this->vms->insert($data, 'tablewarga')){
                 $data = array(
@@ -139,7 +136,7 @@ class Admin extends CI_Controller {
             }
         }
     }
-
+//menu warga
     public function datawarga(){
         if(!$this->session->userdata('status')){
             redirect(base_url('Auth/admin'));
@@ -156,14 +153,14 @@ class Admin extends CI_Controller {
     }
 
     public function update_data_warga(){
+        $idwarga = $this->input->post('idwarga', true);
         $nik = $this->input->post('nik', true);
         $nama = $this->input->post('nama', true);
-        $no_rumah = $this->input->post('no_rumah', true);
         $data = array(
-            'Nama'=>$nama,
-            'NoRumah'=>$no_rumah
+            'NIK'=>$nik,
+            'Nama'=>$nama
         );
-        if($this->vms->update('tablewarga',array('NIK'=>$nik),$data)){
+        if($this->vms->update('tablewarga',array('IdWarga'=>$idwarga),$data)){
             $data = array(
                 'IdLog' => '',
                 'LogAuthor' => $this->session->userdata('role').' | '.$this->session->userdata('Nama'),
@@ -196,13 +193,13 @@ class Admin extends CI_Controller {
 
     public function get_data_warga(){
         $id = $this->input->post('id',true);
-        $warga = $this->vms->getById('tablewarga',array('NIK'=>$id));
+        $warga = $this->vms->getById('tablewarga',array('IdWarga'=>$id));
         if($warga){
             foreach ($warga as $w) {
                 $data = array(
+                    'idwarga' =>$w['IdWarga'],
                     'nik'=>$w['NIK'],
-                    'namawarga'=>$w['Nama'],
-                    'no_rumah'=>$w['NoRumah']
+                    'namawarga'=>$w['Nama']
                 );
             }
         }else{
@@ -210,7 +207,7 @@ class Admin extends CI_Controller {
         }
         echo json_encode($data);
     }
-
+//menu petugas
     public function dataakunpetugas(){
         if(!$this->session->userdata('status')){
             redirect(base_url('Auth/admin'));

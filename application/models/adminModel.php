@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class adminModel extends CI_Model {
     var $table = 'tablewarga';
-    var $kolom_order = array('NIK','Nama','NoRumah');
+    var $kolom_order = array('NIK','Nama');
     var $kolom_cari = array('Nama');
     var $order = array('Nama'=>'asc');
 
