@@ -49,4 +49,9 @@ class vmsModel extends CI_Model {
         $this->db->where($id);
         return $this->db->delete($table);
     }
+    public function getSelectData($select, $tabel){
+        $this->db->select($select);
+        $this->db->from($tabel);
+        return $this->db->get()->result_array();
+    }
 }

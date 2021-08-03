@@ -100,6 +100,25 @@ $(document).ready(function () {
 		],
 	});
 
+	//datatables rumah
+	$("#tablerumah").DataTable({
+		processing: true,
+		serverSide: true,
+		order: [],
+
+		ajax: {
+			url: base_url + "Datatables/get_data_rumah",
+			type: "POST",
+		},
+
+		columnDefs: [
+			{
+				targets: [0],
+				orderable: false,
+			},
+		],
+	});
+
 	//modal edit warga
 	var modaledit = $("#modalEdit");
 	var title = $("#modalTitle");
@@ -208,6 +227,27 @@ $(document).ready(function () {
 			},
 		});
 		return false;
+	});
+
+	//modal edit rumah
+	var modalRumah = $("#modalEditRumah");
+	var titleModalRumah = $("#modalTitle");
+	$("#tablerumah").on("click", ".btnEditRumah", function () {
+		let id = $(this).data("id");
+		$.ajax({
+			url: base_url + "Rumah/get_data_rumah",
+			type: "post",
+			dataType: "json",
+			data: { id: id },
+			success: function (data) {
+				$.each(data, function () {
+					titleModalRumah.text("Edit Data Rumah");
+					$('[name="id_rumah"]').val(data.id_rumah);
+					$('[name="no_rumah"]').val(data.no_rumah);
+					modalRumah.modal("show");
+				});
+			},
+		});
 	});
 	//btn-hapus petugas
 	// $('#tablepetugas').on('click', '.btnHapusPetugas', function(){
