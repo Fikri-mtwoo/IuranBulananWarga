@@ -130,7 +130,7 @@ class Auth extends CI_Controller {
                     'LogCreated' => date('Y-m-d H:i:s')    
                 );
                 $this->vmsModel->insert($data, 'tablelog');
-                redirect(base_url('Admin/admin'));
+                redirect(base_url('Admin/dashboard'));
             }else{
                 $this->session->set_flashdata('pesan','gagal');
                 redirect('Admin');

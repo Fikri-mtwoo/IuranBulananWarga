@@ -38,27 +38,32 @@
       <?php }
        else if(($this->session->userdata('role') === 'admin')) {?>
         <li class="nav-item">
+          <a class="nav-link" href="<?=base_url('Admin/dashboard')?>">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Dashboard</span></a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-fw fa-cog"></i>
-            <span>Form</span>
+            <span>Data Relasi</span>
           </a>
           <div id="collapseOne" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-              <h6 class="collapse-header">Form Components:</h6>
+              <h6 class="collapse-header">Data Relasi:</h6>
               <a class="collapse-item" href="<?=base_url('Admin/admin')?>">Warga</a>
-              <a class="collapse-item" href="<?=base_url('Admin/akunpetugas')?>">Petugas</a>
-              <a class="collapse-item" href="<?=base_url('Admin/akunpengguna')?>">Pengguna</a>
+              <!-- <a class="collapse-item" href="<?=base_url('Admin/akunpetugas')?>">Petugas</a>
+              <a class="collapse-item" href="<?=base_url('Admin/akunpengguna')?>">Pengguna</a> -->
             </div>
           </div>
-      </li>
+        </li>
         <li class="nav-item">
           <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-fw fa-cog"></i>
-            <span>View</span>
+            <span>Data Master</span>
           </a>
           <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-              <h6 class="collapse-header">View Components:</h6>
+              <h6 class="collapse-header">Data Master:</h6>
               <a class="collapse-item" href="<?=base_url('Admin/datawarga')?>">Warga</a>
               <a class="collapse-item" href="<?=base_url('Admin/dataakunpetugas')?>">Petugas</a>
               <a class="collapse-item" href="<?=base_url('Admin/dataakunpengguna')?>">Pengguna</a>
@@ -66,7 +71,7 @@
               <a class="collapse-item" href="<?=base_url('Rumah')?>">Rumah</a>
             </div>
           </div>
-      </li>
+        </li>
        <?php }?> 
       <!-- Divider -->
       <hr class="sidebar-divider">

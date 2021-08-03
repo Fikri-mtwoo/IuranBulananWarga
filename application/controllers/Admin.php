@@ -10,6 +10,10 @@ class Admin extends CI_Controller {
         $this->load->library('form_validation');
         $this->load->model('vmsModel','vms');
     }
+//menu dahsboard
+public function dashboard(){
+    template('admin/dashboard', null);
+}
 //menu warga
     public function admin(){
         if(!$this->session->userdata('status')){
