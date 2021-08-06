@@ -20,6 +20,19 @@ class vmsModel extends CI_Model {
             return $query->result_array();
         }
     }
+    public function update($table, $id, $data){
+        $this->db->where($id);
+        return $this->db->update($table, $data);
+    }
+    public function delete($table, $id){
+        $this->db->where($id);
+        return $this->db->delete($table);
+    }
+    public function getSelectData($select, $tabel){
+        $this->db->select($select);
+        $this->db->from($tabel);
+        return $this->db->get()->result_array();
+    }
     public function getSelect($data){
         $this->db->select('Nama,NoRumah');
         $this->db->from('tablewarga');
@@ -41,17 +54,12 @@ class vmsModel extends CI_Model {
         $this->db->order_by('IdBulanIuran', 'ASC');
         return $this->db->get()->result_array();
     }
-    public function update($table, $id, $data){
-        $this->db->where($id);
-        return $this->db->update($table, $data);
-    }
-    public function delete($table, $id){
-        $this->db->where($id);
-        return $this->db->delete($table);
-    }
-    public function getSelectData($select, $tabel){
-        $this->db->select($select);
-        $this->db->from($tabel);
+    public function getJoinRumahWarga($data){
+        $this->db->select('tablerwarga.IdRWarga, tablerwarga.IdRumah, tablerwarga.IdWarga, tablewarga.Nama, tablerumah.NoRumah');
+        $this->db->from('tablerwarga');
+        $this->db->join('tablewarga', 'tablewarga.IdWarga = tablerwarga.IdWarga', 'inner');
+        $this->db->join('tablerumah', 'tablerumah.IdRumah = tablerwarga.IdRumah','inner');
+        $this->db->where('IdRWarga', $data);
         return $this->db->get()->result_array();
     }
 }

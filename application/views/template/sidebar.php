@@ -50,7 +50,7 @@
           <div id="collapseOne" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
               <h6 class="collapse-header">Data Relasi:</h6>
-              <a class="collapse-item" href="<?=base_url('Admin/admin')?>">Warga</a>
+              <a class="collapse-item" href="<?=base_url('RumahWarga')?>">Rumah Warga</a>
               <!-- <a class="collapse-item" href="<?=base_url('Admin/akunpetugas')?>">Petugas</a>
               <a class="collapse-item" href="<?=base_url('Admin/akunpengguna')?>">Pengguna</a> -->
             </div>

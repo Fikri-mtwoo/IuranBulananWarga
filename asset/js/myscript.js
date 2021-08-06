@@ -119,6 +119,25 @@ $(document).ready(function () {
 		],
 	});
 
+	//datatables rumah warga
+	$("#tablerumahwarga").DataTable({
+		processing: true,
+		serverSide: true,
+		order: [],
+
+		ajax: {
+			url: base_url + "Datatables/get_data_rumahwarga",
+			type: "POST",
+		},
+
+		columnDefs: [
+			{
+				targets: [0, 4],
+				orderable: false,
+			},
+		],
+	});
+
 	//modal edit warga
 	var modaledit = $("#modalEdit");
 	var title = $("#modalTitle");
@@ -245,6 +264,32 @@ $(document).ready(function () {
 					$('[name="id_rumah"]').val(data.id_rumah);
 					$('[name="no_rumah"]').val(data.no_rumah);
 					modalRumah.modal("show");
+				});
+			},
+		});
+	});
+
+	//modal edit rumah warga
+	var modalrw = $("#modalEditRumahWarga");
+	var titleModalRumah = $("#modalTitle");
+	$("#tablerumahwarga").on("click", ".btnEditRumahWarga", function () {
+		let id = $(this).data("id");
+
+		$.ajax({
+			url: base_url + "RumahWarga/get_data_rumahwarga",
+			type: "post",
+			dataType: "json",
+			data: { id: id },
+			success: function (data) {
+				$.each(data, function () {
+					titleModalRumah.text("Edit Data Rumah Warga");
+					$(".select").val(data.id_warga);
+					$(".select").text(data.warga);
+					// $('select[name="id_warga"]').children("option").val(data.warga);
+					$('[name="idrw"]').val(data.id_rm);
+					$('[name="id_rumah"]').val(data.id_rumah);
+					$('[name="no_rumah"]').val(data.rumah).attr("readonly", "readonly");
+					modalrw.modal("show");
 				});
 			},
 		});
