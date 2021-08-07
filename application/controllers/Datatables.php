@@ -13,6 +13,7 @@ class Datatables extends CI_Controller {
         $this->load->model('histori_transaksi_Model','ht');
         $this->load->model('rumahModel','rm');
         $this->load->model('rumahwargaModel','rwm');
+        $this->load->model('iuranModel','im');
     }
     public function get_data_user(){
         $list = $this->admin->get_datatables();
@@ -191,6 +192,32 @@ class Datatables extends CI_Controller {
             "draw" => $_POST['draw'],
             "recordsTotal" => $this->rwm->count_all(),
             "recordsFiltered" => $this->rwm->count_filtered(),
+            "data" => $data,
+        );
+        //output dalam format JSON
+        echo json_encode($output);
+    }
+    //menu iuran 
+    public function get_data_iuran(){
+        $list = $this->im->get_datatables();
+        $data = array();
+        $no = $_POST['start'];
+        foreach ($list as $field) {
+            $no++;
+            $row = array();
+            $row[] = $no;
+            $row[] = $field->TotalIuran;
+            $row[] = $field->RincianIuran;
+            $row[] = $field->TanggalBuat;
+            // $row[] = "<button type='button' class='btn btn-primary btnEditRumahWarga' data-id='".$field->IdIuran."'>Ubah</button>";
+
+            $data[] = $row;
+        }
+ 
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->im->count_all(),
+            "recordsFiltered" => $this->im->count_filtered(),
             "data" => $data,
         );
         //output dalam format JSON

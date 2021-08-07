@@ -69,6 +69,7 @@
               <a class="collapse-item" href="<?=base_url('Admin/dataakunpengguna')?>">Pengguna</a>
               <a class="collapse-item" href="<?=base_url('Admin/datatransaksi')?>">Transaksi</a>
               <a class="collapse-item" href="<?=base_url('Rumah')?>">Rumah</a>
+              <a class="collapse-item" href="<?=base_url('Iuran')?>">Iuran</a>
             </div>
           </div>
         </li>

@@ -138,6 +138,25 @@ $(document).ready(function () {
 		],
 	});
 
+	//datatables iuran
+	$("#tableiuran").DataTable({
+		processing: true,
+		serverSide: true,
+		order: [],
+
+		ajax: {
+			url: base_url + "Datatables/get_data_iuran",
+			type: "POST",
+		},
+
+		columnDefs: [
+			{
+				targets: [0, 1, 2],
+				orderable: false,
+			},
+		],
+	});
+
 	//modal edit warga
 	var modaledit = $("#modalEdit");
 	var title = $("#modalTitle");
