@@ -51,8 +51,7 @@
             <div class="bg-white py-2 collapse-inner rounded">
               <h6 class="collapse-header">Data Relasi:</h6>
               <a class="collapse-item" href="<?=base_url('RumahWarga')?>">Rumah Warga</a>
-              <!-- <a class="collapse-item" href="<?=base_url('Admin/akunpetugas')?>">Petugas</a>
-              <a class="collapse-item" href="<?=base_url('Admin/akunpengguna')?>">Pengguna</a> -->
+              <a class="collapse-item" href="<?=base_url('Admin/datatransaksi')?>">Transaksi</a>
             </div>
           </div>
         </li>
@@ -67,7 +66,6 @@
               <a class="collapse-item" href="<?=base_url('Admin/datawarga')?>">Warga</a>
               <a class="collapse-item" href="<?=base_url('Admin/dataakunpetugas')?>">Petugas</a>
               <a class="collapse-item" href="<?=base_url('Admin/dataakunpengguna')?>">Pengguna</a>
-              <a class="collapse-item" href="<?=base_url('Admin/datatransaksi')?>">Transaksi</a>
               <a class="collapse-item" href="<?=base_url('Rumah')?>">Rumah</a>
               <a class="collapse-item" href="<?=base_url('Iuran')?>">Iuran</a>
             </div>

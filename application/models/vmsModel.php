@@ -9,6 +9,9 @@ class vmsModel extends CI_Model {
         
         return $this->db->insert($table, $data); 
     }
+    public function insertBatch($data, $table){
+        return $this->db->insert_batch($table, $data);
+    }
     public function getRow($table){
         return $this->db->count_all($table);
     }
@@ -32,6 +35,20 @@ class vmsModel extends CI_Model {
         $this->db->select($select);
         $this->db->from($tabel);
         return $this->db->get()->result_array();
+    }
+    public function getSelectWhereData($select, $tabel, $where){
+        $this->db->select($select);
+        $this->db->from($tabel);
+        $this->db->where($where);
+        return $this->db->get()->result_array();
+    }
+    public function getSelectGroup($select, $tabel, $group, $having){
+        $this->db->select($select);
+        $this->db->from($tabel);
+        $this->db->group_by($group);
+        $this->db->having($having);
+        // return $this->db->get()->result();
+        return $this->db->count_all_results();
     }
     public function getSelect($data){
         $this->db->select('Nama,NoRumah');

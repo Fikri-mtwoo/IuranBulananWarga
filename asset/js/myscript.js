@@ -63,7 +63,7 @@ $(document).ready(function () {
 	});
 
 	//datatables transaksi
-	$("#tabletransaksi").DataTable({
+	var table = $("#tabletransaksi").DataTable({
 		processing: true,
 		serverSide: true,
 		order: [],
@@ -71,11 +71,15 @@ $(document).ready(function () {
 		ajax: {
 			url: base_url + "Datatables/get_data_transaksi",
 			type: "POST",
+			data: function (data) {
+				data.bulan = $("#bulan").val();
+				data.tahun = $("#tahun").val();
+			},
 		},
 
 		columnDefs: [
 			{
-				targets: [0, 5],
+				targets: [0],
 				orderable: false,
 			},
 		],
@@ -155,6 +159,14 @@ $(document).ready(function () {
 				orderable: false,
 			},
 		],
+	});
+
+	//btn change pada menu transaksi
+	$("#bulan").change(function () {
+		table.ajax.reload();
+	});
+	$("#tahun").change(function () {
+		table.ajax.reload();
 	});
 
 	//modal edit warga
