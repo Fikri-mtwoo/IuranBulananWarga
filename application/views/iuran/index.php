@@ -16,7 +16,7 @@
     <!-- content -->
     <div class="row justify-content-md-center">
      <div class="col-md-12 col-md-auto">
-     <div class="flashpengguna" data-notif="<?=$this->session->userdata('flash')?>"></div>
+     <div class="notif" data-name="<?=$this->session->flashdata('name')?>" data-jenis="<?=$this->session->flashdata('type')?>" data-notif="<?=$this->session->flashdata('flash')?>"></div>
         <div class="card">
             <div class="card-header">
                 <a href="<?=base_url('Iuran/tambah')?>" class="btn btn-success">Tambah data</a>

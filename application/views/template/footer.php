@@ -51,6 +51,7 @@
   <script src="<?=base_url('asset/')?>vendor/datatables/jquery.dataTables.min.js"></script>
   <script src="<?=base_url('asset/')?>vendor/datatables/dataTables.bootstrap4.min.js"></script>
   <script src="<?=base_url('asset/')?>js/myscript.js"></script>
+  <script src="<?=base_url('asset/')?>js/alert.js"></script>
 </body>
 
 </html>
