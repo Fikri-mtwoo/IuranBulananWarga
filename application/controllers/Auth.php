@@ -133,7 +133,7 @@ class Auth extends CI_Controller {
                 redirect(base_url('Admin/dashboard'));
             }else{
                 $this->session->set_flashdata('pesan','gagal');
-                redirect('Admin');
+                redirect('Auth/admin');
             }
         }
     }
