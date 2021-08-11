@@ -39,10 +39,10 @@ class RumahWarga extends CI_Controller {
                 'LogCreated' => date('Y-m-d H:i:s')    
             );
             $this->vm->insert($data, 'tablelog');
-            $this->session->set_flashdata('flash','berhasil');
+            $this->session->set_flashdata(['flash'=>'berhasil', 'name'=>'rumahwarga', 'type'=>'insert']);
             redirect(base_url('RumahWarga'));
             }else{
-            $this->session->set_flashdata('flash','gagal');
+            $this->session->set_flashdata(['flash'=>'gagal', 'name'=>'rumahwarga', 'type'=>'insert']);
             redirect(base_url('RumahWarga'));
             }
         }
@@ -77,10 +77,10 @@ class RumahWarga extends CI_Controller {
                 'LogCreated' => date('Y-m-d H:i:s')    
             );
             $this->vm->insert($data, 'tablelog');
-            $this->session->set_flashdata('flash','berhasil');
+            $this->session->set_flashdata(['flash'=>'berhasil', 'name'=>'rumahwarga', 'type'=>'update']);
             redirect(base_url('RumahWarga'));
         }else{
-            $this->session->set_flashdata('flash','gagal');
+            $this->session->set_flashdata(['flash'=>'gagal', 'name'=>'rumahwarga', 'type'=>'update']);
             redirect(base_url('RumahWarga'));
         }
     }
