@@ -47,8 +47,11 @@ public function dashboard(){
                     'LogCreated' => date('Y-m-d H:i:s')    
                 );
                 $this->vms->insert($data, 'tablelog');
-                $this->session->set_flashdata('flash','berhasil');
-                redirect(base_url('Admin/admin'));
+                $this->session->set_flashdata(['flash'=>'berhasil', 'name'=>'warga', 'type'=>'insert']);
+                redirect(base_url('Admin/datawarga'));
+            }else{
+                $this->session->set_flashdata(['flash'=>'gagal', 'name'=>'warga', 'type'=>'insert']);
+                redirect(base_url('Admin/datawarga'));
             }
         }
     }
@@ -94,8 +97,11 @@ public function dashboard(){
                     'LogCreated' => date('Y-m-d H:i:s')    
                 );
                 $this->vms->insert($data, 'tablelog');
-                $this->session->set_flashdata('flash','berhasil');
-                redirect(base_url('Admin/akunpetugas'));
+                $this->session->set_flashdata(['flash'=>'berhasil', 'name'=>'petugas', 'type'=>'insert']);
+                redirect(base_url('Admin/dataakunpetugas'));
+            }else{
+                $this->session->set_flashdata(['flash'=>'gagal', 'name'=>'petugas', 'type'=>'insert']);
+                redirect(base_url('Admin/dataakunpetugas'));
             }
         }
     }
@@ -135,8 +141,11 @@ public function dashboard(){
                     'LogCreated' => date('Y-m-d H:i:s')    
                 );
                 $this->vms->insert($data, 'tablelog');
-                $this->session->set_flashdata('flash','berhasil');
-                redirect(base_url('Admin/akunpengguna'));
+                $this->session->set_flashdata(['flash'=>'berhasil', 'name'=>'pengguna', 'type'=>'insert']);
+                redirect(base_url('Admin/dataakunpengguna'));
+            }else{
+                $this->session->set_flashdata(['flash'=>'gagal', 'name'=>'pengguna', 'type'=>'insert']);
+                redirect(base_url('Admin/dataakunpengguna'));
             }
         }
     }
@@ -172,7 +181,10 @@ public function dashboard(){
                 'LogCreated' => date('Y-m-d H:i:s')    
             );
             $this->vms->insert($data, 'tablelog');
-            $this->session->set_flashdata('flash','berhasil');
+            $this->session->set_flashdata(['flash'=>'berhasil', 'name'=>'warga', 'type'=>'update']);
+            redirect(base_url('Admin/datawarga'));
+        }else{
+            $this->session->set_flashdata(['flash'=>'berhasil', 'name'=>'warga', 'type'=>'update']);
             redirect(base_url('Admin/datawarga'));
         }
     }
@@ -252,7 +264,10 @@ public function dashboard(){
                 'LogCreated' => date('Y-m-d H:i:s')    
             );
             $this->vms->insert($data, 'tablelog');
-            $this->session->set_flashdata('flash','berhasil');
+            $this->session->set_flashdata(['flash'=>'berhasil', 'name'=>'petugas', 'type'=>'update']);
+            redirect(base_url('Admin/dataakunpetugas'));
+        }else{
+            $this->session->set_flashdata(['flash'=>'gagal', 'name'=>'petugas', 'type'=>'update']);
             redirect(base_url('Admin/dataakunpetugas'));
         }
     }
@@ -333,7 +348,10 @@ public function dashboard(){
                 'LogCreated' => date('Y-m-d H:i:s')    
             );
             $this->vms->insert($data, 'tablelog');
-            $this->session->set_flashdata('flash','berhasil');
+            $this->session->set_flashdata(['flash'=>'berhasil', 'name'=>'pengguna', 'type'=>'update']);
+            redirect(base_url('Admin/dataakunpengguna'));
+        }else{
+            $this->session->set_flashdata(['flash'=>'gagal', 'name'=>'pengguna', 'type'=>'update']);
             redirect(base_url('Admin/dataakunpengguna'));
         }
     }
@@ -404,14 +422,17 @@ public function dashboard(){
             $hasil = $this->vms->insertBatch($data,'tabletransaksi');
             if($hasil){
                     $this->vms->insertBatch($log,'tablelogtransaksi');
-                    $this->session->set_flashdata('flash','berhasil');
+                    $this->session->set_flashdata(['flash'=>'berhasil', 'name'=>'transaksi', 'type'=>'insert']);
+                    redirect(base_url('Admin/datatransaksi'));
+                }else{
+                    $this->session->set_flashdata(['flash'=>'gagal', 'name'=>'transaksi', 'type'=>'insert']);
                     redirect(base_url('Admin/datatransaksi'));
                 }
         }else{
-            $this->session->set_flashdata('flash','berhasil');
+            $this->session->set_flashdata(['flash'=>'gagal', 'name'=>'transaksi', 'type'=>'cek']);
             redirect(base_url('Admin/datatransaksi'));
         }
         // var_dump($cek);
             // var_dump($data);
-        }
+    }
 }

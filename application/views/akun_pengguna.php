@@ -17,7 +17,7 @@
  <!-- Content Row -->
  <div class="row justify-content-md-center">
      <div class="col-md-6 col-md-auto">
-     <div class="flashinsertpengguna" data-notif="<?=$this->session->userdata('flash')?>"></div>
+     <div class="notif" data-name="<?=$this->session->flashdata('name')?>" data-jenis="<?=$this->session->flashdata('type')?>" data-notif="<?=$this->session->userdata('flash')?>"></div>
         <div class="card">
             <div class="card-header">
                 Akun Pengguna

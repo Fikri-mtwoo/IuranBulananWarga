@@ -8,7 +8,7 @@
  <div class="row justify-content-md-center">
  <!-- <?php var_dump($warga)?> -->
      <div class="col-md-12 col-md-auto">
-     <div class="flash" data-notif="<?=$this->session->userdata('flash')?>"></div>
+     <div class="notif" data-name="<?=$this->session->flashdata('name')?>" data-jenis="<?=$this->session->flashdata('type')?>" data-notif="<?=$this->session->userdata('flash')?>"></div>
         <div class="card">
             <div class="card-header">
               <div class="form-row">
