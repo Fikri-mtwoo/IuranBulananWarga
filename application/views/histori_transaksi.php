@@ -21,7 +21,8 @@
                       <tr>
                         <th scope="col">No</th>
                         <th scope="col">Nama Warga</th>
-                        <th scope="col">Nama Bulan</th>
+                        <th scope="col">Iuran</th>
+                        <th scope="col">Bulan / Tahun</th>
                         <th scope="col">Nama Petugas</th>
                         <th scope="col">Jumlah</th>
                         <th scope="col">Tanggal Bayar</th>
