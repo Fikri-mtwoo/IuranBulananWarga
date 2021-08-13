@@ -31,37 +31,33 @@ class Dashboard extends CI_Controller {
         
         if($this->form_validation->run() == FALSE){
             $data['warga'] = $this->vmsModel->getAll('tablewarga');
-            $data['bulan'] = $this->vmsModel->getAll('tablebulaniuran');
-            $data['petugas'] = $this->vmsModel->getAll('tablepetugas');
             
             template('dashboard', $data);            
         }else{
-            $nik            = $this->input->post('nik',true);
-            $bulan          = $this->input->post('bulan',true);
-            $petugas        = $this->input->post('petugas',true);
+            $idwarga        = $this->encryption->decrypt($this->input->post('nik',true));
+            $idbulan        = $this->input->post('bulan',true);
+            $idtahun        = $this->input->post('tahun',true);
+            $idpetugas      = $this->session->userdata('IdPetugas');
             $jmlbayar       = $this->input->post('jmlbayar',true);
-            $tanggalbayar   = date('Y-m-d');
-            $IdTransaksi    = IdTransaksi();
+            $tanggalbayar   = date('Y-m-d H:i:s');
+            $IdTransaksi    = $this->encryption->decrypt($this->input->post('transaksi',true));
             $data = array(
-            'IdTransaksi'=> $IdTransaksi,
-            'NIK'=> $this->encryption->decrypt($nik),
-            'IdBulan'=> $this->encryption->decrypt($bulan),
-            'IdPetugas'=> $this->encryption->decrypt($petugas),
+            'IdPetugas'=> $idpetugas,
             'JmlBayar'=> $jmlbayar,
             'TanggalBayar'=> $tanggalbayar
-        );
-            if($this->vmsModel->insert($data, 'tabletransaksi')){
+            );
+            if($this->vmsModel->update('tabletransaksi',['IdTransaksi'=>$IdTransaksi, 'Idwarga'=>$idwarga, 'IdBulan'=>$idbulan, 'IdTahun'=>$idtahun],$data)){
                 $data = array(
-                    'IdLog' => '',
-                    'LogAuthor' => $this->session->userdata('role').' | '.$this->session->userdata('Nama'),
-                    'LogDes' => 'Menambahkan Transaksi |sebesar Rp. '.$jmlbayar.' atas nama = '.$this->encryption->decrypt($nik),
+                    'IdLogTransaksi' => '',
+                    'LogAuthorTransaksi' => $this->session->userdata('role').' | '.$this->session->userdata('Nama'),
+                    'LogKetTransaksi' => 'Merubah TABLETRANSAKSI |sebesar Rp. '.$jmlbayar.' idwarga = '.$idwarga.'idtransaksi = '.$IdTransaksi,
                     'LogCreated' => date('Y-m-d H:i:s')    
                 );
-                $this->vmsModel->insert($data, 'tablelog');
-                $this->session->set_flashdata('flash','berhasil');
+                $this->vmsModel->insert($data, 'tablelogtransaksi');
+                $this->session->set_flashdata(['flash'=>'berhasil', 'name'=>'transaksi','type'=>'update']);
                 redirect(base_url('Dashboard'));
             }else{
-                $this->session->set_flashdata('flash','gagal');
+                $this->session->set_flashdata(['flash'=>'gagal', 'name'=>'transaksi','type'=>'update']);
                 redirect(base_url('Dashboard'));
             }
         }    
@@ -120,5 +116,43 @@ class Dashboard extends CI_Controller {
         }else{
             return true;
         }
+    }
+
+
+    public function get_bulan(){
+        $this->load->library('encryption');
+        $id = $this->encryption->decrypt($this->input->post('id', true));
+        $bulan = $this->vmsModel->getSelectWhereData('IdBulan, IdTahun','tabletransaksi',['Idwarga'=>$id, 'JmlBayar'=>null]);
+        if($bulan){
+            foreach ($bulan as $b) {
+                $data [] = [
+                    'warga' =>$this->input->post('id', true),
+                    'iBulan'=> $b['IdBulan'],
+                    'iTahun'=> $b['IdTahun'],
+                    'bulan' => bulan($b['IdBulan']),
+                    'tahun' => tahun($b['IdTahun'])
+                ];
+            }
+        }else{
+            $data = 'false';
+        }
+        echo json_encode($data);
+    }
+    public function get_iuran(){
+        $this->load->library('encryption');
+        $id = $this->encryption->decrypt($this->input->post('id', true));
+        $bulan = $this->input->post('bulan', true);
+        $tahun = $this->input->post('tahun', true);
+        $iurans = $this->vmsModel->getSelectWhereData('IdTransaksi, IdIuran','tabletransaksi',['IdWarga'=>$id, 'IdBulan'=>$bulan, 'IdTahun'=>$tahun]);
+        $iuran = $this->vmsModel->getSelectWhereData('TotalIuran','tableiuran',['IdIuran'=>$iurans[0]['IdIuran']]);
+        if($iuran){
+            $data = [
+                'transaksi' => $this->encryption->encrypt($iurans[0]['IdTransaksi']),
+                'iuran' => $iuran[0]['TotalIuran']
+            ];
+        }else{
+            $data = 'false';
+        }
+        echo json_encode($data);
     }
 }

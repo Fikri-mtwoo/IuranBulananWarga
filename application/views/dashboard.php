@@ -1,9 +1,3 @@
-
-
-
-
-    
-
         <!-- Begin Page Content -->
         <div class="container-fluid">
 
@@ -16,7 +10,7 @@
           <div class="row justify-content-md-center">
                 <div class="col-xl-6 col-md-auto">
                     <?php if($this->session->flashdata('flash')) : ?>
-                      <div class="flash" data-flash="<?=$this->session->flashdata('flash')?>"></div>
+                      <div class="notif" data-name="<?=$this->session->flashdata('name')?>" data-jenis="<?=$this->session->flashdata('type')?>" data-notif="<?=$this->session->flashdata('flash')?>"></div>
                     <?php endif;?>
                     <div class="card">
                         <div class="card-header">
@@ -25,15 +19,15 @@
                         <div class="card-body">
                             <form action="" method="post">
                                 <div class="form-group">
-                                    <label for="nama warga">Nama Warga</label>
-                                    <select class="form-control" name="nik" id="nama warga">
+                                    <label for="warga">Nama Warga</label>
+                                    <select class="form-control" name="nik" id="warga">
                                         <option value="none">Pilih Nama Warga</option>
                                         <?php
                                     foreach ($warga as $w) {
                                         if($w['Nama'] == $this->session->userdata('Nama')){
-                                                echo "<option class='text-primary' value='".$this->encryption->encrypt($w['NIK'])."'>".$w['Nama']."</option>";
+                                                echo "<option class='text-primary' value='".$this->encryption->encrypt($w['IdWarga'])."'>".$w['Nama']."</option>";
                                             }else{
-                                                echo "<option value='".$this->encryption->encrypt($w['NIK'])."'>".$w['Nama']."</option>";    
+                                                echo "<option value='".$this->encryption->encrypt($w['IdWarga'])."'>".$w['Nama']."</option>";    
                                             }
                                       
                                     } ?>
@@ -43,20 +37,19 @@
                                 <div class="form-group">
                                     <label for="bulan">Bulan</label>
                                     <select class="form-control" name="bulan" id="bulan">
-                                    <option value="none">Pilih Bulan</option>
-                                    <?php
-                                    foreach ($bulan as $b) {
-                                        echo "<option value=".$this->encryption->encrypt($b['IdBulanIuran']).">".$b['NamaBulan']." /".$b['Tahun']."</option>";
-                                    } ?>
+                                        <option value="none">Pilih Bulan</option>
                                     </select>
                                     <?php echo form_error('bulan'); ?>
                                 </div>
                                 <div class="form-group">
-                                    <input type="hidden" name="petugas" value="<?=$this->encryption->encrypt($this->session->userdata('IdPetugas'))?>">
+                                    <input type="hidden" name="transaksi" id="transaksi">
+                                </div>
+                                <div class="form-group">
+                                    <input type="hidden" name="tahun" id="tahun">
                                 </div>
                                 <div class="form-group">
                                     <label for="jumlah bayar">Jumlah Bayar</label>
-                                    <input type="text" name="jmlbayar" class="form-control" id="jumlah bayar" >
+                                    <input type="text" name="jmlbayar" class="form-control" id="jumlah_bayar" readonly>
                                     <?php echo form_error('jmlbayar'); ?>
                                 </div>
                                 <div class="form-group">

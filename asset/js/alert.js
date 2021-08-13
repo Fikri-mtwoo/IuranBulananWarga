@@ -191,6 +191,20 @@ $(document).ready(function () {
 					icon: "warning",
 				});
 			}
+		} else if (jenis == "update") {
+			if (notif == "berhasil") {
+				Swal.fire({
+					title: "Data transaksi",
+					text: "Berhasil diinput",
+					icon: "success",
+				});
+			} else if (notif == "gagal") {
+				Swal.fire({
+					title: "Data transaksi",
+					text: "Gagal diinput",
+					icon: "error",
+				});
+			}
 		}
 	}
 

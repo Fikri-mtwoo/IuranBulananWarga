@@ -98,7 +98,7 @@ $(document).ready(function () {
 
 		columnDefs: [
 			{
-				targets: [0, 2, 3, 4],
+				targets: [0, 2, 4, 5],
 				orderable: false,
 			},
 		],
@@ -167,6 +167,51 @@ $(document).ready(function () {
 	});
 	$("#tahun").change(function () {
 		table.ajax.reload();
+	});
+
+	//menu histori transaksi
+	$("#warga").change(function () {
+		let id = $(this).val();
+		$.ajax({
+			url: base_url + "Dashboard/get_bulan",
+			type: "post",
+			dataType: "json",
+			data: { id: id },
+			success: function (data) {
+				let html = "<option value='none'>pilih bulan</option>";
+				data.forEach(function (data) {
+					html +=
+						"<option value='" +
+						data.iBulan +
+						"' data-bulan='" +
+						data.warga +
+						"' data-tahun='" +
+						data.iTahun +
+						"'>" +
+						data.bulan +
+						"-" +
+						data.tahun +
+						"</option>";
+				});
+				$("#bulan").html(html);
+			},
+		});
+	});
+	$("#bulan").change(function () {
+		let bulan = $(this).val();
+		let id = $("#bulan option:selected").data("bulan");
+		let tahun = $("#bulan option:selected").data("tahun");
+		$("#tahun").val(tahun);
+		$.ajax({
+			url: base_url + "Dashboard/get_iuran",
+			type: "post",
+			dataType: "json",
+			data: { id: id, bulan: bulan, tahun: tahun },
+			success: function (data) {
+				$("#jumlah_bayar").val(data.iuran);
+				$("#transaksi").val(data.transaksi);
+			},
+		});
 	});
 
 	//modal edit warga
