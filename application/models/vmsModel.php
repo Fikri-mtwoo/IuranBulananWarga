@@ -50,9 +50,9 @@ class vmsModel extends CI_Model {
         // return $this->db->get()->result();
         return $this->db->count_all_results();
     }
-    public function getSelect($data){
-        $this->db->select('Nama,NoRumah');
-        $this->db->from('tablewarga');
+    public function getSelect($select, $table, $data){
+        $this->db->select($select);
+        $this->db->from($table);
         $this->db->where($data);
         return $this->db->get()->row();
     }
@@ -62,14 +62,18 @@ class vmsModel extends CI_Model {
         return $this->db->get($table)->row();
     }
     public function getJoin($data){
-        $this->db->select('Nama,NamaBulan,TanggalBayar,JmlBayar,NamaPetugas');
-        $this->db->from('tabletransaksi');
-        $this->db->join('tablewarga', 'tablewarga.NIK = tabletransaksi.NIK', 'inner');
-        $this->db->join('tablebulaniuran', 'tablebulaniuran.IdBulanIuran = tabletransaksi.IdBulan','inner');
-        $this->db->join('tablepetugas', 'tablepetugas.IdPetugas = tabletransaksi.IdPetugas','inner');
-        $this->db->where('Nama', $data);
-        $this->db->order_by('IdBulanIuran', 'ASC');
+        $this->db->select('NoRumah');
+        $this->db->from('tablerumah');
+        $this->db->join('tablerwarga', 'tablerwarga.IdRumah = tablerumah.IdRumah');
+        $this->db->where($data);
         return $this->db->get()->result_array();
+    }
+    public function getJoinIuran($data){
+        $this->db->select('TotalIuran, RincianIuran');
+        $this->db->from('tabletransaksi');
+        $this->db->join('tableiuran','tableiuran.IdIuran = tabletransaksi.IdIuran');
+        $this->db->where($data);
+        return $this->db->get()->row();
     }
     public function getJoinRumahWarga($data){
         $this->db->select('tablerwarga.IdRWarga, tablerwarga.IdRumah, tablerwarga.IdWarga, tablewarga.Nama, tablerumah.NoRumah');

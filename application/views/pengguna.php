@@ -16,8 +16,12 @@
              <hr>
              <p>KARTU IURAN WARGA RT 01 / RW 17</p>
              <p>Nama        <span>: </span><?=$warga->Nama?></p>
-             <p>No. Rumah   <span>: </span><?=$warga->NoRumah?></p>
-             <p>Iuran/Bulan <span>: Rp. 50.0000</span></p>
+             <p>No. Rumah   <span>: </span>
+                <?php foreach ($rumah as $rmh) : ?>
+                    <?=$rmh['NoRumah']?>
+                <?php endforeach?>
+             </p>
+             <p>Iuran/Bulan <span>: Rp. <?=number_format($iuran->TotalIuran)?></span></p>
              <table class="table table-bordered">
                  <thead>
                      <tr>
@@ -28,7 +32,7 @@
                          <th>Paraf</th>
                      </tr>
                  </thead>
-                 <tbody>
+                 <!-- <tbody>
                         <?php 
                         $no = 1;
                         foreach ($pengguna as $p) {
@@ -45,13 +49,10 @@
                         echo "<td>".$total->JmlBayar."</td>";  
                         echo "</tr>"; 
                      ?>
-                 </tbody>
+                 </tbody> -->
              </table>
              <p>Rincian :</p>
-             <p>Security    :Rp. 20.000 </p>
-             <p>Sampah      :Rp. 10.000</p>
-             <p>IPL         :Rp. 5.000</p>
-             <p>Kas RT 01   :Rp. 15.000 </p>
+             <p><?=$iuran->RincianIuran?></p>
              <p class="text-right"><strong>Bendahara RT 01</strong></p>
              <p class="text-right"><strong>Zaenal Mutaqin S</strong></p>
              <P><strong><em>Diharap Pembayaran Paling Lambat Tgl 5 setiap bulan</em></strong></P>

@@ -86,9 +86,13 @@ class Dashboard extends CI_Controller {
         if($this->session->userdata('role') === 'admin'){
             redirect(base_url('Dashboard/admin'));
         }
-        $data['warga'] = $this->vmsModel->getSelect(array('NIK'=>$this->session->userdata('NIK')));
-        $data['pengguna'] = $this->vmsModel->getJoin($data['warga']->Nama);
-        $data['total'] = $this->vmsModel->getSum('tabletransaksi', array('NIK'=>$this->session->userdata('NIK')));
+        $data['warga'] = $this->vmsModel->getSelect('IdWarga, Nama', 'tablewarga',array('NIK'=>$this->session->userdata('NIK')));
+        $bulan = $this->vmsModel->getSelect('MAX(IdBulan) as IdBulan', 'tabletransaksi', ['Idwarga'=>$data['warga']->IdWarga]);
+        $tahun = $this->vmsModel->getSelect('MAX(IdTahun) as IdTahun', 'tabletransaksi', ['Idwarga'=>$data['warga']->IdWarga]);
+        $data['rumah'] = $this->vmsModel->getJoin(['IdWarga'=>$data['warga']->IdWarga]);
+        $data['iuran'] = $this->vmsModel->getJoinIuran(['Idwarga'=>$data['warga']->IdWarga, 'IdBulan'=>$bulan->IdBulan, 'IdTahun'=> $tahun->IdTahun]);
+        // $data['pengguna'] = $this->vmsModel->getJoin($data['warga']->Nama);
+        // $data['total'] = $this->vmsModel->getSum('tabletransaksi', array('NIK'=>$this->session->userdata('NIK')));
         template('pengguna', $data);
     }
 
