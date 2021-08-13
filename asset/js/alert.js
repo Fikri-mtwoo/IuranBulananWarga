@@ -204,6 +204,22 @@ $(document).ready(function () {
 			showConfirmButton: false,
 			timer: 1500,
 		});
+	} else if (pesan == "warning") {
+		Swal.fire({
+			title: "Login Gagal",
+			text: "Akun belum terdaftar",
+			icon: "error",
+			showConfirmButton: false,
+			timer: 1500,
+		});
+	} else if (pesan == "status") {
+		Swal.fire({
+			title: "Login Gagal",
+			text: "Akun belum diaktifkan",
+			icon: "error",
+			showConfirmButton: false,
+			timer: 1500,
+		});
 	}
 	// const div = $(".flash").data("flash");
 

@@ -10,8 +10,7 @@ class Auth extends CI_Controller {
         // $this->load->helper('flashData');
     }
     
-    public function index()
-    {
+    public function index(){
         if($this->session->userdata('status') AND $this->session->userdata('role') === 'petugas'){
             redirect(base_url('Dashboard'));
         }else if($this->session->userdata('status') AND $this->session->userdata('role') === 'pengguna'){
@@ -29,26 +28,37 @@ class Auth extends CI_Controller {
                 'Username' => $user
             );
             $login = $this->vmsModel->getById('tablepetugas', $data);
-            if(password_verify($pass, $login[0]['PasswordPetugas'])){
-                foreach ($login as $result) {
-                    $data = array(
-                        'IdPetugas' => $result['IdPetugas'],
-                        'Nama' => $result['NamaPetugas'],
-                        'status' => 'login',
-                        'role'=> 'petugas'
-                    );
+            if($login){
+                if($login[0]['Status'] === '1'){
+                    if(password_verify($pass, $login[0]['PasswordPetugas'])){
+                        $role = $this->vmsModel->getSelectWhereData('NamaRole','tablerole',['IdRole'=>$login[0]['IdRole']]);
+                        foreach ($login as $result) {
+                            $data = array(
+                                'IdPetugas' => $result['IdPetugas'],
+                                'Nama' => $result['NamaPetugas'],
+                                'status' => 'login',
+                                'role'=> $role[0]['NamaRole']
+                            );
+                        }
+                        $this->session->set_userdata($data);
+                        $data = array(
+                            'IdLog' => '',
+                            'LogAuthor' => $this->session->userdata('role').' | '.$this->session->userdata('Nama'),
+                            'LogDes' => 'Melakukan Login',
+                            'LogCreated' => date('Y-m-d H:i:s')    
+                        );
+                        $this->vmsModel->insert($data, 'tablelog');
+                        redirect(base_url('Dashboard'));
+                    }else{
+                        $this->session->set_flashdata('pesan','gagal');
+                        redirect('Auth');
+                    }
+                }else{
+                    $this->session->set_flashdata('pesan','status');
+                    redirect('Auth');
                 }
-                $this->session->set_userdata($data);
-                $data = array(
-                    'IdLog' => '',
-                    'LogAuthor' => $this->session->userdata('role').' | '.$this->session->userdata('Nama'),
-                    'LogDes' => 'Melakukan Login',
-                    'LogCreated' => date('Y-m-d H:i:s')    
-                );
-                $this->vmsModel->insert($data, 'tablelog');
-                redirect(base_url('Dashboard'));
             }else{
-                $this->session->set_flashdata('pesan','gagal');
+                $this->session->set_flashdata('pesan','warning');
                 redirect('Auth');
             }
         }
