@@ -82,26 +82,31 @@ class Auth extends CI_Controller {
                 'NIK' => $user
             );
             $login = $this->vmsModel->getById('tablepengguna', $data);
-            if(password_verify($pass, $login[0]['PasswordPengguna'])){
-                foreach ($login as $result) {
+            if($login){
+                if(password_verify($pass, $login[0]['PasswordPengguna'])){
+                    foreach ($login as $result) {
+                        $data = array(
+                            'IdPengguna' => $result['IdPengguna'],
+                            'NIK' => $result['NIK'],
+                            'status' => 'login',
+                            'role'=> 'pengguna'
+                        );
+                    }
+                    $this->session->set_userdata($data);
                     $data = array(
-                        'IdPengguna' => $result['IdPengguna'],
-                        'NIK' => $result['NIK'],
-                        'status' => 'login',
-                        'role'=> 'pengguna'
+                        'IdLog' => '',
+                        'LogAuthor' => $this->session->userdata('role').' | '.$this->session->userdata('NIK'),
+                        'LogDes' => 'Melakukan Login',
+                        'LogCreated' => date('Y-m-d H:i:s')    
                     );
+                    $this->vmsModel->insert($data, 'tablelog');
+                    redirect(base_url('Dashboard/pengguna'));
+                }else{
+                    $this->session->set_flashdata('pesan','gagal');
+                    redirect('Auth/Pengguna');
                 }
-                $this->session->set_userdata($data);
-                $data = array(
-                    'IdLog' => '',
-                    'LogAuthor' => $this->session->userdata('role').' | '.$this->session->userdata('NIK'),
-                    'LogDes' => 'Melakukan Login',
-                    'LogCreated' => date('Y-m-d H:i:s')    
-                );
-                $this->vmsModel->insert($data, 'tablelog');
-                redirect(base_url('Dashboard/pengguna'));
             }else{
-                $this->session->set_flashdata('pesan','gagal');
+                $this->session->set_flashdata('pesan','warning');
                 redirect('Auth/Pengguna');
             }
         }
