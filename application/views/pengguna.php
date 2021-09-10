@@ -1,3 +1,4 @@
+<!-- <?php var_dump($iuran)?> -->
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
@@ -21,7 +22,7 @@
                     <?=$rmh['NoRumah']?>
                 <?php endforeach?>
              </p>
-             <p>Iuran/Bulan <span>: Rp. <?=number_format($iuran->TotalIuran)?></span></p>
+             <p>Iuran/Bulan <span><?php if($iuran !== null) :?>: Rp. <?=number_format($iuran->TotalIuran)?><?php endif?></span></p>
              <table class="table table-bordered">
                  <thead>
                      <tr>
@@ -32,27 +33,43 @@
                          <th>Paraf</th>
                      </tr>
                  </thead>
-                 <!-- <tbody>
-                        <?php 
-                        $no = 1;
-                        foreach ($pengguna as $p) {
-                            echo "<tr>";
-                            echo "<td>".$no++."</td>";    
-                            echo "<td>".$p['NamaBulan']."</td>";    
-                            echo "<td>".$p['TanggalBayar']."</td>";    
-                            echo "<td>".$p['JmlBayar']."</td>";    
-                            echo "<td>".$p['NamaPetugas']."</td>";    
-                            echo "</tr>";    
-                        }
-                        echo "<tr>";
-                        echo "<td colspan='4'>Total</td>";    
-                        echo "<td>".$total->JmlBayar."</td>";  
-                        echo "</tr>"; 
-                     ?>
-                 </tbody> -->
+                 <tbody>
+                        <?php if($transaksi !== null) :?>
+                            <?php foreach ($bulan as $bln) : ?>
+                                <tr class="text-center">
+                                    <td><?=$bln['IdBulanIuran']?></td>
+                                    <td><?=$bln['NamaBulan']?></td>
+                                        
+                                        <?php if ($bln['IdBulanIuran'] == $bln['IdBulanIuran']) :?>
+                                            <?php foreach ($transaksi as $tsk) : ?>
+                                                <?php if($tsk['IdBulan'] == $bln['IdBulanIuran']) :?>
+                                                    <?php if ($tsk['IdPetugas'] !== null) :?>
+                                                        <td class="table-success"><?=$tsk['TanggalBayar']?></td>
+                                                        <td class="table-success"><?=number_format($tsk['JmlBayar'])?></td>
+                                                        <td class="table-success"><?=$tsk['NamaPetugas']?></td>
+                                                    <?php endif?>
+                                                    <?php if ($tsk['IdPetugas'] == null) :?>
+                                                        <td colspan="3" class="table-danger">Belum Dibayar</td>
+                                                    <?php endif?>
+                                                <?php endif?>
+                                            <?php endforeach?>
+                                        <?php endif?>
+                                </tr>
+                            <?php endforeach?>
+                            <?php $total = 0; foreach ($transaksi as $tsk) :?>
+                                <?php $total += $tsk['JmlBayar']?>
+                            <?php endforeach?>
+                            <tr class="text-center">
+                                <td colspan='4'>Total</td>    
+                                <td><?=number_format($total)?></td>  
+                            </tr>
+                        <?php else :?>
+                            <td colspan="5" class="table-warning text-center">Tidak Terdapat Data Transaksi</td>
+                        <?php endif?>
+                 </tbody>
              </table>
              <p>Rincian :</p>
-             <p><?=$iuran->RincianIuran?></p>
+             <?php if($iuran !== null) :?><p><?=$iuran->RincianIuran?></p><?php endif?>
              <p class="text-right"><strong>Bendahara RT 01</strong></p>
              <p class="text-right"><strong>Zaenal Mutaqin S</strong></p>
              <P><strong><em>Diharap Pembayaran Paling Lambat Tgl 5 setiap bulan</em></strong></P>

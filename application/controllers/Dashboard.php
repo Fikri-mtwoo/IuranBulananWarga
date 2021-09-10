@@ -91,6 +91,8 @@ class Dashboard extends CI_Controller {
         $tahun = $this->vmsModel->getSelect('MAX(IdTahun) as IdTahun', 'tabletransaksi', ['Idwarga'=>$data['warga']->IdWarga]);
         $data['rumah'] = $this->vmsModel->getJoin(['IdWarga'=>$data['warga']->IdWarga]);
         $data['iuran'] = $this->vmsModel->getJoinIuran(['Idwarga'=>$data['warga']->IdWarga, 'IdBulan'=>$bulan->IdBulan, 'IdTahun'=> $tahun->IdTahun]);
+        $data['bulan'] = $this->vmsModel->getSelectData('IdBulanIuran, NamaBulan', 'tablebulaniuran');
+        $data['transaksi'] = $this->vmsModel->getJoinTransaksi(['IdWarga'=>$data['warga']->IdWarga]);
         // $data['pengguna'] = $this->vmsModel->getJoin($data['warga']->Nama);
         // $data['total'] = $this->vmsModel->getSum('tabletransaksi', array('NIK'=>$this->session->userdata('NIK')));
         template('pengguna', $data);

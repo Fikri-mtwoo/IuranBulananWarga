@@ -73,7 +73,12 @@ class vmsModel extends CI_Model {
         $this->db->from('tabletransaksi');
         $this->db->join('tableiuran','tableiuran.IdIuran = tabletransaksi.IdIuran');
         $this->db->where($data);
-        return $this->db->get()->row();
+        $query =  $this->db->get();
+        if($query->num_rows() == 0){
+            return null;
+        }else{
+            return $query->row();
+        }
     }
     public function getJoinRumahWarga($data){
         $this->db->select('tablerwarga.IdRWarga, tablerwarga.IdRumah, tablerwarga.IdWarga, tablewarga.Nama, tablerumah.NoRumah');
@@ -82,5 +87,17 @@ class vmsModel extends CI_Model {
         $this->db->join('tablerumah', 'tablerumah.IdRumah = tablerwarga.IdRumah','inner');
         $this->db->where('IdRWarga', $data);
         return $this->db->get()->result_array();
+    }
+    public function getJoinTransaksi($data){
+        $this->db->select('IdBulan, tabletransaksi.IdPetugas, JmlBayar, TanggalBayar, NamaPetugas');
+        $this->db->from('tabletransaksi');
+        $this->db->join('tablepetugas','tablepetugas.IdPetugas = tabletransaksi.IdPetugas','left');
+        $this->db->where($data);
+        $query =  $this->db->get();
+        if($query->num_rows() == 0){
+            return null;
+        }else{
+            return $query->result_array();
+        }
     }
 }
