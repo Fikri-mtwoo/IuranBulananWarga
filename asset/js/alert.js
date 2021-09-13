@@ -230,7 +230,7 @@ $(document).ready(function () {
 		Swal.fire({
 			title: "Login Gagal",
 			text: "Akun belum diaktifkan",
-			icon: "error",
+			icon: "warning",
 			showConfirmButton: false,
 			timer: 1500,
 		});

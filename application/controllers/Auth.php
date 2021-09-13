@@ -11,6 +11,55 @@ class Auth extends CI_Controller {
     }
     
     public function index(){
+        if($this->session->userdata('status') AND $this->session->userdata('role') === 'pengguna'){
+            redirect(base_url('Dashboard/pengguna'));
+        }else if($this->session->userdata('status') AND $this->session->userdata('role') === 'petugas'){
+            redirect(base_url('Dashboard'));
+        }
+        $this->form_validation->set_error_delimiters('<small class="text-danger">', '</small>');
+        $this->form_validation->set_rules('username','Username', 'trim|required', array('required'=>'Username tidak boleh kosong'));
+        $this->form_validation->set_rules('password','Password', 'trim|required', array('required'=>'Password tidak boleh kosong'));
+        if($this->form_validation->run() == FALSE){
+            $data['ket'] = 'Warga';
+            $this->load->view('login', $data);
+        }else{
+            $user = $this->input->post('username', true);
+            $pass = $this->input->post('password', true);
+            $data = array(
+                'NIK' => $user
+            );
+            $login = $this->vmsModel->getById('tablepengguna', $data);
+            if($login){
+                if(password_verify($pass, $login[0]['PasswordPengguna'])){
+                    foreach ($login as $result) {
+                        $data = array(
+                            'IdPengguna' => $result['IdPengguna'],
+                            'NIK' => $result['NIK'],
+                            'status' => 'login',
+                            'role'=> 'pengguna'
+                        );
+                    }
+                    $this->session->set_userdata($data);
+                    $data = array(
+                        'IdLog' => '',
+                        'LogAuthor' => $this->session->userdata('role').' | '.$this->session->userdata('NIK'),
+                        'LogDes' => 'Melakukan Login',
+                        'LogCreated' => date('Y-m-d H:i:s')    
+                    );
+                    $this->vmsModel->insert($data, 'tablelog');
+                    redirect(base_url('Dashboard/pengguna'));
+                }else{
+                    $this->session->set_flashdata('pesan','gagal');
+                    redirect('Auth');
+                }
+            }else{
+                $this->session->set_flashdata('pesan','warning');
+                redirect('Auth');
+            }
+        }
+    }
+    
+    public function petugas(){
         if($this->session->userdata('status') AND $this->session->userdata('role') === 'petugas'){
             redirect(base_url('Dashboard'));
         }else if($this->session->userdata('status') AND $this->session->userdata('role') === 'pengguna'){
@@ -20,7 +69,8 @@ class Auth extends CI_Controller {
         $this->form_validation->set_rules('username','Username', 'trim|required', array('required'=>'Username tidak boleh kosong'));
         $this->form_validation->set_rules('password','Password', 'trim|required', array('required'=>'Password tidak boleh kosong'));
         if($this->form_validation->run() == FALSE){
-            $this->load->view('login');
+            $data['ket'] = 'Petugas';
+            $this->load->view('login',$data);
         }else{
             $user = $this->input->post('username', true);
             $pass = $this->input->post('password', true);
@@ -51,63 +101,15 @@ class Auth extends CI_Controller {
                         redirect(base_url('Dashboard'));
                     }else{
                         $this->session->set_flashdata('pesan','gagal');
-                        redirect('Auth');
+                        redirect('Auth/petugas');
                     }
                 }else{
                     $this->session->set_flashdata('pesan','status');
-                    redirect('Auth');
+                    redirect('Auth/petugas');
                 }
             }else{
                 $this->session->set_flashdata('pesan','warning');
-                redirect('Auth');
-            }
-        }
-    }
-
-    public function pengguna(){
-        if($this->session->userdata('status') AND $this->session->userdata('role') === 'pengguna'){
-            redirect(base_url('Dashboard/pengguna'));
-        }else if($this->session->userdata('status') AND $this->session->userdata('role') === 'petugas'){
-            redirect(base_url('Dashboard'));
-        }
-        $this->form_validation->set_error_delimiters('<small class="text-danger">', '</small>');
-        $this->form_validation->set_rules('username','Username', 'trim|required', array('required'=>'Username tidak boleh kosong'));
-        $this->form_validation->set_rules('password','Password', 'trim|required', array('required'=>'Password tidak boleh kosong'));
-        if($this->form_validation->run() == FALSE){
-            $this->load->view('login');
-        }else{
-            $user = $this->input->post('username', true);
-            $pass = $this->input->post('password', true);
-            $data = array(
-                'NIK' => $user
-            );
-            $login = $this->vmsModel->getById('tablepengguna', $data);
-            if($login){
-                if(password_verify($pass, $login[0]['PasswordPengguna'])){
-                    foreach ($login as $result) {
-                        $data = array(
-                            'IdPengguna' => $result['IdPengguna'],
-                            'NIK' => $result['NIK'],
-                            'status' => 'login',
-                            'role'=> 'pengguna'
-                        );
-                    }
-                    $this->session->set_userdata($data);
-                    $data = array(
-                        'IdLog' => '',
-                        'LogAuthor' => $this->session->userdata('role').' | '.$this->session->userdata('NIK'),
-                        'LogDes' => 'Melakukan Login',
-                        'LogCreated' => date('Y-m-d H:i:s')    
-                    );
-                    $this->vmsModel->insert($data, 'tablelog');
-                    redirect(base_url('Dashboard/pengguna'));
-                }else{
-                    $this->session->set_flashdata('pesan','gagal');
-                    redirect('Auth/Pengguna');
-                }
-            }else{
-                $this->session->set_flashdata('pesan','warning');
-                redirect('Auth/Pengguna');
+                redirect('Auth/petugas');
             }
         }
     }

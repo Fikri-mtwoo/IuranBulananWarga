@@ -39,33 +39,31 @@
                     <div class="pesan" data-pesan="<?=$this->session->flashdata('pesan')?>"></div>
                   <?php endif; ?>
                   <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-4">Selamat Datang!</h1>
+                    <h1 class="h4 text-gray-900 mb-4">Login Sebagai <?=$ket?>!</h1>
                   </div>
                   <form class="user" action="" method="post">
                     <div class="form-group">
-                      <input type="text" class="form-control form-control-user" name="username" aria-describedby="emailHelp" placeholder="Masukan Username..." value="<?=set_value('username')?>">
+                      <input type="text" class="form-control form-control-user" name="username" aria-describedby="emailHelp" placeholder="Masukan Username..." value="<?=set_value('username')?>" autofocus>
                       <?php echo form_error('username')?>
                     </div>
                     <div class="form-group">
                       <input type="password" class="form-control form-control-user" name="password" placeholder="Password">
                       <?php echo form_error('password')?>
                     </div>
-                    <div class="form-group">
-                      <div class="custom-control custom-checkbox small">
-                        <input type="checkbox" class="custom-control-input" id="customCheck">
-                        <label class="custom-control-label" for="customCheck">Remember Me</label>
-                      </div>
-                    </div>
                     <button type="submit" class="btn btn-primary btn-user btn-block">Masuk</button>
                     <hr>
-                      <a href="<?=base_url('Auth/pengguna')?>" class="btn btn-google btn-user btn-block">
-                        <!-- <i class="fab fa-google fa-fw"></i> Login with Google -->
-                        Masuk Sebagai Pengguna
-                      </a>
-                      <a href="<?=base_url('Auth')?>" class="btn btn-facebook btn-user btn-block">
-                        <!-- <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook -->
-                        Masuk Sebagai Petugas
-                      </a>
+                      <div class="row">
+                          <div class="col-md">
+                            <a href="<?=base_url('Auth')?>" class="btn btn-success btn-user btn-block">
+                              Masuk Sebagai Warga
+                            </a>
+                          </div>
+                          <div class="col-md">
+                            <a href="<?=base_url('Auth/petugas')?>" class="btn btn-danger btn-user btn-block">
+                              Masuk Sebagai Petugas
+                            </a>
+                          </div>
+                      </div>
                   </form>
                 </div>
               </div>
