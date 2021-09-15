@@ -56,7 +56,7 @@ $(document).ready(function () {
 
 		columnDefs: [
 			{
-				targets: [0, 2],
+				targets: [0, 2, 3],
 				orderable: false,
 			},
 		],
@@ -315,10 +315,70 @@ $(document).ready(function () {
 
 					$('[name="id_pengguna"]').val(data.id_pengguna);
 					$('[name="password_lama_pengguna"]').val(data.password_pengguna);
-					$("#nik_pengguna").val(data.username_pengguna);
+					$("#nik_pengguna").val(data.nama_pengguna);
 					$('[name="username_pengguna"]').val(data.username_pengguna);
 					modal.modal("show");
 				});
+			},
+		});
+		return false;
+	});
+	//button aktif akun
+	$("#tablepengguna").on("click", ".btnAktifAkun", function () {
+		let id = $(this).data("id");
+		$.ajax({
+			url: base_url + "Admin/update_aktif_akun_pengguna",
+			type: "post",
+			dataType: "json",
+			data: { id: id },
+			success: function (data) {
+				if (data.status == "berhasil") {
+					Swal.fire({
+						title: "Akun pengguna",
+						text: "Berhasil diaktivasi",
+						icon: "success",
+					}).then((result) => {
+						window.location = base_url + "Admin/dataakunpengguna";
+					});
+				} else if (data.status == "gagal") {
+					Swal.fire({
+						title: "Password pengguna",
+						text: "Gagal diaktivasi",
+						icon: "error",
+					}).then((result) => {
+						window.location = base_url + "Admin/dataakunpengguna";
+					});
+				}
+			},
+		});
+		return false;
+	});
+	//button no aktif akun
+	$("#tablepengguna").on("click", ".btnNonAktifAkun", function () {
+		let id = $(this).data("id");
+		$.ajax({
+			url: base_url + "Admin/update_non_aktif_akun_pengguna",
+			type: "post",
+			dataType: "json",
+			data: { id: id },
+			success: function (data) {
+				if (data.status == "berhasil") {
+					Swal.fire({
+						title: "Akun pengguna",
+						text: "Berhasil dinon aktivasi",
+						icon: "success",
+					}).then((result) => {
+						window.location = base_url + "Admin/dataakunpengguna";
+					});
+				} else if (data.status == "gagal") {
+					Swal.fire({
+						title: "Password pengguna",
+						text: "Gagal dinon aktivasi",
+						icon: "error",
+					}).then((result) => {
+						window.location = base_url + "Admin/dataakunpengguna";
+					});
+				}
 			},
 		});
 		return false;

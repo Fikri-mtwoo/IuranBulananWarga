@@ -119,18 +119,26 @@ public function dashboard(){
 
         $this->form_validation->set_rules('nik','Nama Warga','trim|required');
         $this->form_validation->set_rules('password','Password','trim|required');
+        $this->form_validation->set_rules('role','Role','trim|required');
 
         $this->form_validation->set_error_delimiters('<small class="text-danger">', '</small>');
         if($this->form_validation->run() == FALSE){
-            $data['warga'] = $this->vms->getAll('tablewarga');
+            $data['warga'] = $this->vms->getJoinPengguna();
+            $data['role'] = $this->vms->getSelect('*','tablerole',['NamaRole'=>'warga']);
             template('akun_pengguna', $data);
         }else{
-            $nik = $this->input->post('nik', true);
+            $data = explode('/' ,$this->input->post('nik', true));
+            $nik = $data[0];
+            $nama = $data[1];
             $password = password_hash($this->input->post('password', true), PASSWORD_BCRYPT);
+            $role = $this->input->post('role', true);
             $data = array(
                 'Idpengguna'=>'',
+                'NamaPengguna'=>$nama,
                 'NIK'=>$nik,
-                'PasswordPengguna'=>$password
+                'PasswordPengguna'=>$password,
+                'IdRole' => $role,
+                'Status' => 0
             );
 
             if($this->vms->insert($data, 'tablepengguna')){
@@ -365,12 +373,47 @@ public function dashboard(){
                     'id_pengguna'=>$p['IdPengguna'],
                     'username_pengguna'=>$p['NIK'],
                     'password_pengguna'=>$p['PasswordPengguna'],
+                    'nama_pengguna' =>$p['NamaPengguna']
                 );
             }
         }else{
             $data = $pengguna;
         }
         echo json_encode($data);
+    }
+
+    public function update_aktif_akun_pengguna(){
+        $id = $this->input->post('id', true);
+            if($this->vms->update('tablepengguna',array('IdPengguna'=>$id),['Status'=>1])){
+                $data = array(
+                    'IdLog' => '',
+                    'LogAuthor' => $this->session->userdata('role').' | '.$this->session->userdata('Nama'),
+                    'LogDes' => 'Merubah Data Status pada TABLEPENGGUNA | data IdPengguna = '.$id,
+                    'LogCreated' => date('Y-m-d H:i:s')    
+                );
+                $this->vms->insert($data, 'tablelog');
+                $data = ['status'=>'berhasil'];
+            }else{
+                $data = ['status'=>'gagal'];
+            }
+            echo json_encode($data);
+    }
+
+    public function update_non_aktif_akun_pengguna(){
+        $id = $this->input->post('id', true);
+            if($this->vms->update('tablepengguna',array('IdPengguna'=>$id),['Status'=>0])){
+                $data = array(
+                    'IdLog' => '',
+                    'LogAuthor' => $this->session->userdata('role').' | '.$this->session->userdata('Nama'),
+                    'LogDes' => 'Merubah Data Status pada TABLEPENGGUNA | data IdPengguna = '.$id,
+                    'LogCreated' => date('Y-m-d H:i:s')    
+                );
+                $this->vms->insert($data, 'tablelog');
+                $data = ['status'=>'berhasil'];
+            }else{
+                $data = ['status'=>'gagal'];
+            }
+            echo json_encode($data);
     }
 //menu transaksi
     public function datatransaksi(){

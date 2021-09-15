@@ -78,7 +78,16 @@ class Datatables extends CI_Controller {
             $row = array();
             $row[] = $no;
             $row[] = $field->NIK;
-            $row[] = "<button type='button' class='btn btn-primary btnEditPengguna' data-id='".$field->IdPengguna."'>Ubah</button>";
+            if($field->Status == 0){
+                $row[] = "<p class='text-center text-danger'>Belum Aktif</p>";
+            }else{
+                $row[] = "<p class='text-center text-success'>Aktif</p>";
+            }
+            if($field->Status == 0){
+                $row[] = "<button type='button' class='btn btn-primary btnEditPengguna' data-id='".$field->IdPengguna."'>Ubah Password</button> | <button type='button' class='btn btn-success btnAktifAkun' data-id='".$field->IdPengguna."'>Aktif Akun</button>";
+            }else{
+                $row[] = "<button type='button' class='btn btn-primary btnEditPengguna' data-id='".$field->IdPengguna."'>Ubah Password</button> | <button type='button' class='btn btn-danger btnNonAktifAkun' data-id='".$field->IdPengguna."'>Non Aktif Akun</button>";
+            }
 
             $data[] = $row;
         }

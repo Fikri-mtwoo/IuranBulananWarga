@@ -28,16 +28,38 @@
                         <label for="nama">Nama Warga</label>
                         <select id="nama" name="nik" class="form-control">
                             <option value="" selected>Choose...</option>
-                            <?php foreach ($warga as $w) {
-                                echo "<option value='".$w['NIK']."'>".$w['Nama']."</option>";
-                            }?>
+                                <?php if($warga !== null) :?>
+                                    <?php foreach ($warga as $w) {
+                                        echo "<option value='".$w['NIK']."/".$w['Nama']."'>".$w['Nama']."</option>";
+                                    }?>
+                                <?php else :?>
+                                    <option value="">Data pengguna tidak ada</option>
+                                <?php endif?>
                         </select>
                         <?=form_error('nik')?>
                     </div>
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" name="password" class="form-control" id="password">
-                        <?=form_error('password')?>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" name="password" class="form-control" id="password">
+                                <?=form_error('password')?>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                                <div class="form-group ">
+                                <label for="nama">Role</label>
+                                <select id="nama" name="role" class="form-control">
+                                    <option value="" selected>Choose...</option>
+                                        <?php if($role !== null) :?>
+                                            <option value="<?=$role->IdRole?>"><?=$role->NamaRole?></option>
+                                        <?php else :?>
+                                            <option value="">Data pengguna tidak ada</option>
+                                        <?php endif?>
+                                </select>
+                                <?=form_error('role')?>
+                            </div>
+                        </div>
                     </div>
                     <button type="submit" class="btn btn-success btn-block">Buat Akun</button>
                 </form>

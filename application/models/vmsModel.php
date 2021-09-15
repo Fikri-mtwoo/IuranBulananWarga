@@ -100,4 +100,15 @@ class vmsModel extends CI_Model {
             return $query->result_array();
         }
     }
+    public function getJoinPengguna(){
+        $this->db->select('tablerwarga.IdRWarga, tablewarga.IdWarga, tablewarga.Nama, tablewarga.NIK');
+        $this->db->from('tablerwarga');
+        $this->db->join('tablewarga', 'tablewarga.IdWarga = tablerwarga.IdWarga', 'inner');
+        $query =  $this->db->get();
+        if($query->num_rows() == 0){
+            return null;
+        }else{
+            return $query->result_array();
+        }
+    }
 }

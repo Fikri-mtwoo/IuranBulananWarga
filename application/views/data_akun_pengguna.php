@@ -24,12 +24,13 @@
             <div class="card-body">
                 <div class="row">
                   <div class="col-md">
-                  <table class="table table-striped table-bordered" id="tablepengguna">
+                  <table class="table table-striped table-bordered text-center" id="tablepengguna">
                     <thead>
                       <tr>
                         <th scope="col">No</th>
                         <th scope="col">Usernmae Pengguna</th>
-                        <th scope="col">Ubah Password</th>
+                        <th scope="col">Status Akun</th>
+                        <th scope="col">Aksi</th>
                       </tr>
                     </thead>
                   </table>
@@ -50,7 +51,7 @@
         <div class="modal-body">
         <form action="<?=base_url('Admin/update_data_pengguna')?>" method="post" >
                     <div class="form-group">
-                        <label for="nama">NIK Pengguna</label>
+                        <label for="nama">Nama Pengguna</label>
                         <input type="text" class="form-control" id="nik_pengguna">
                         <input type="hidden" name="id_pengguna">
                     </div>
