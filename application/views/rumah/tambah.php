@@ -25,10 +25,19 @@
             <div class="card-body">
                 <form action="" method="post">
                     <div class="form-row">
-                        <div class="form-group col-md-12">
+                        <div class="form-group col-md-8">
                             <label for="norumah">NoRumah</label>
                             <input type="text" name="no_rumah" class="form-control" id="norumah">
                             <?=form_error('no_rumah')?>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="status">Status Rumah</label>
+                            <select class="form-control" id="status" name="status_rumah">
+                                <option value="">Pilih</option>
+                                <option value="tetap">Tetap</option>
+                                <option value="kontrak">Kontrak</option>
+                            </select>
+                            <?=form_error('status_rumah')?>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-success btn-block">Tambah</button>

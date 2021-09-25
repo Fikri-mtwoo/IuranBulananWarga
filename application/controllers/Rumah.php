@@ -17,17 +17,21 @@ class Rumah extends CI_Controller {
         $this->form_validation->set_rules('no_rumah','No Rumah','trim|required',[
             'required' => 'No Rumah tidak boleh kosong'
         ]);
+        $this->form_validation->set_rules('status_rumah','Status Rumah','trim|required',[
+            'required' => '%s tidak boleh kosong'
+        ]);
         if($this->form_validation->run() == FALSE){
             template('rumah/tambah', null);
         }else{
             $data = [
-                'NoRumah' => $this->input->post('no_rumah',true)
+                'NoRumah' => $this->input->post('no_rumah',true),
+                'StatusRumah' => $this->input->post('status_rumah', true)
             ];
             if($this->vm->insert($data, 'tablerumah')){
                 $data = array(
                     'IdLog' => '',
                     'LogAuthor' => $this->session->userdata('role').' | '.$this->session->userdata('Nama'),
-                    'LogDes' => 'Menambahkan Data pada TABELRUMAH |rumah. '.$this->input->post('no_rumah',true),
+                    'LogDes' => 'Menambahkan Data pada TABELRUMAH |rumah = . '.$this->input->post('no_rumah',true).' status rumah = '.$this->input->post('status_rumah', true),
                     'LogCreated' => date('Y-m-d H:i:s')    
                 );
                 $this->vm->insert($data, 'tablelog');
