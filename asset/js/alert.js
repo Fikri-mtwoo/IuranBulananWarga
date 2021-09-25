@@ -205,6 +205,20 @@ $(document).ready(function () {
 					icon: "error",
 				});
 			}
+		} else if (jenis == "ket") {
+			if (notif == "berhasil") {
+				Swal.fire({
+					title: "Data transaksi",
+					text: "Berhasil merubah keterangan",
+					icon: "success",
+				});
+			} else if (notif == "gagal") {
+				Swal.fire({
+					title: "Data transaksi",
+					text: "Gagal merubah keterangan",
+					icon: "error",
+				});
+			}
 		}
 	}
 

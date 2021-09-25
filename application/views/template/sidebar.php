@@ -29,6 +29,11 @@
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Histori Transaksi</span></a>
       </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="<?=base_url('dashboard/keterangan_transaksi')?>">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Keterangan Transaksi</span></a>
+      </li>
       <?php }else if(($this->session->userdata('role') === 'pengguna')) {?>
         <li class="nav-item">
         <a class="nav-link" href="<?=base_url('Dashboard/pengguna')?>">

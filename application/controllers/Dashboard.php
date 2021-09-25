@@ -11,6 +11,7 @@ class Dashboard extends CI_Controller {
         $this->load->helper('flashData');
     }
 
+    //untuk role petugas
     public function index()
 	{
         $this->load->library('encryption');
@@ -76,6 +77,57 @@ class Dashboard extends CI_Controller {
         template('histori_transaksi', $data=null); 
     }
 
+    public function keterangan_transaksi(){
+        $this->load->library('encryption');
+        if (!$this->session->userdata('status')) {
+            redirect(base_url('Auth'));
+        }
+        if($this->session->userdata('role') === 'pengguna'){
+            redirect(base_url('Dashboard/pengguna'));
+        }
+        if($this->session->userdata('role') === 'admin'){
+            redirect(base_url('Dashboard/admin'));
+        }
+
+
+        $this->form_validation->set_error_delimiters('<small class="text-danger">', '</small>');
+        $this->form_validation->set_rules('nik','Nama Warga','trim|required|callback_nik_validate');
+        $this->form_validation->set_rules('bulan','Bulan','trim|required|callback_bulan_validate');
+        $this->form_validation->set_rules('kettrans','Keterangan Transaksi','trim|required', array('required'=>'%s tidak boleh kosong'));
+        if($this->form_validation->run() == false){
+            $data['warga'] = $this->vmsModel->getJoinWarga('tablerwarga.IdRWarga, tablewarga.IdWarga, tablewarga.Nama')->result_array();
+            template('transaksi/keterangan_transaksi', $data); 
+        }else{
+            $idwarga        = $this->encryption->decrypt($this->input->post('nik',true));
+            $idbulan        = $this->input->post('bulan',true);
+            $idtahun        = $this->input->post('tahun',true);
+            $idpetugas      = $this->session->userdata('IdPetugas');
+            $keterangan     = $this->input->post('kettrans',true);
+            $tanggalbayar   = date('Y-m-d H:i:s');
+            $IdTransaksi    = $this->encryption->decrypt($this->input->post('transaksi',true));
+            $data = array(
+            'IdPetugas'=> $idpetugas,
+            'JmlBayar'=> 0,
+            'TanggalBayar'=> $tanggalbayar,
+            'Keterangan' => $keterangan
+            );
+            if($this->vmsModel->update('tabletransaksi',['IdTransaksi'=>$IdTransaksi, 'Idwarga'=>$idwarga, 'IdBulan'=>$idbulan, 'IdTahun'=>$idtahun],$data)){
+                $data = array(
+                    'IdLogTransaksi' => '',
+                    'LogAuthorTransaksi' => $this->session->userdata('role').' | '.$this->session->userdata('Nama'),
+                    'LogKetTransaksi' => 'Merubah TABLETRANSAKSI | idwarga = '.$idwarga.' idtransaksi = '.$IdTransaksi.' Keterangan = kosong',
+                    'LogCreated' => date('Y-m-d H:i:s')    
+                );
+                $this->vmsModel->insert($data, 'tablelogtransaksi');
+                $this->session->set_flashdata(['flash'=>'berhasil', 'name'=>'transaksi','type'=>'ket']);
+                redirect(base_url('Dashboard/keterangan_transaksi'));
+            }else{
+                $this->session->set_flashdata(['flash'=>'gagal', 'name'=>'transaksi','type'=>'ket']);
+                redirect(base_url('Dashboard/keterangan_transaksi'));
+            }
+        }
+    }
+
     public function pengguna(){
         if(!$this->session->userdata('status')){
             redirect(base_url('Auth/pengguna'));
@@ -128,7 +180,7 @@ class Dashboard extends CI_Controller {
     public function get_bulan(){
         $this->load->library('encryption');
         $id = $this->encryption->decrypt($this->input->post('id', true));
-        $bulan = $this->vmsModel->getSelectWhereData('IdBulan, IdTahun','tabletransaksi',['Idwarga'=>$id, 'JmlBayar'=>null]);
+        $bulan = $this->vmsModel->getSelectWhereData('IdBulan, IdTahun','tabletransaksi',['Idwarga'=>$id, 'JmlBayar'=>null, 'Keterangan'=>null]);
         if($bulan){
             foreach ($bulan as $b) {
                 $data [] = [
