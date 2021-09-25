@@ -117,7 +117,7 @@ $(document).ready(function () {
 
 		columnDefs: [
 			{
-				targets: [0],
+				targets: [0, 2, 3],
 				orderable: false,
 			},
 		],
@@ -397,6 +397,7 @@ $(document).ready(function () {
 			success: function (data) {
 				$.each(data, function () {
 					titleModalRumah.text("Edit Data Rumah");
+					$(".text-primary").text(data.status_rumah).val(data.status_rumah);
 					$('[name="id_rumah"]').val(data.id_rumah);
 					$('[name="no_rumah"]').val(data.no_rumah);
 					modalRumah.modal("show");

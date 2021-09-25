@@ -49,7 +49,8 @@ class Rumah extends CI_Controller {
             foreach ($rumah as $r) {
                 $data = [
                     'id_rumah'=>$r['IdRumah'],
-                    'no_rumah'=>$r['NoRumah']
+                    'no_rumah'=>$r['NoRumah'],
+                    'status_rumah'=>$r['StatusRumah']
                 ];
             }
         }else{
@@ -59,7 +60,8 @@ class Rumah extends CI_Controller {
     }
     public function update_data_rumah(){
         $data = [
-            "NoRumah" => $this->input->post('no_rumah')
+            "NoRumah" => $this->input->post('no_rumah',true),
+            'StatusRumah' => $this->input->post('status_rumah',true)
         ];
         if($this->vm->update('tablerumah', ['IdRumah'=>$this->input->post('id_rumah')], $data)){
             $data = array(

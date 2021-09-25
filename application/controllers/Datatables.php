@@ -175,6 +175,7 @@ class Datatables extends CI_Controller {
             $row = array();
             $row[] = $no;
             $row[] = $field->NoRumah;
+            $row[] = $field->StatusRumah;
             $row[] = "<button type='button' class='btn btn-primary btnEditRumah' data-id='".$field->IdRumah."'>Ubah</button>";
 
             $data[] = $row;

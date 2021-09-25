@@ -28,6 +28,7 @@
                       <tr>
                         <th scope="col">No</th>
                         <th scope="col">Nomor Rumah</th>
+                        <th scope="col">Status Rumah</th>
                         <th scope="col">Edit</th>
                       </tr>
                     </thead>
@@ -47,11 +48,20 @@
         </div>
         <div class="modal-body">
         <form action="<?=base_url('Rumah/update_data_rumah')?>" method="post" >
-                    <input type="hidden" name="id_rumah" id="idrumah">
-                    <div class="form-row">
-                        <div class="form-group col-md-12">
-                            <label for="norumah">NoRumah</label>
+        <div class="form-row">
+                        <div class="form-group col-md-8">
+                          <label for="norumah">NoRumah</label>
                             <input type="text" name="no_rumah" class="form-control" id="norumah">
+                            <input type="hidden" name="id_rumah" id="idrumah">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="status_rumah">Status Rumah</label>
+                            <select class="form-control" id="status_rumah" name="status_rumah">
+                                <option class="text-primary" selected></option>
+                                <option value="">Pilih</option>
+                                <option value="tetap">Tetap</option>
+                                <option value="kontrak">Kontrak</option>
+                            </select>
                         </div>
                     </div>
         </div>
