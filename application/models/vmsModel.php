@@ -95,7 +95,7 @@ class vmsModel extends CI_Model {
         return $this->db->get()->result_array();
     }
     public function getJoinTransaksi($data){
-        $this->db->select('IdBulan, tabletransaksi.IdPetugas, JmlBayar, TanggalBayar, NamaPetugas');
+        $this->db->select('IdBulan, tabletransaksi.IdPetugas, JmlBayar, TanggalBayar, NamaPetugas, Keterangan');
         $this->db->from('tabletransaksi');
         $this->db->join('tablepetugas','tablepetugas.IdPetugas = tabletransaksi.IdPetugas','left');
         $this->db->where($data);

@@ -44,9 +44,14 @@
                                             <?php foreach ($transaksi as $tsk) : ?>
                                                 <?php if($tsk['IdBulan'] == $bln['IdBulanIuran']) :?>
                                                     <?php if ($tsk['IdPetugas'] !== null) :?>
-                                                        <td class="table-success"><?=$tsk['TanggalBayar']?></td>
-                                                        <td class="table-success"><?=number_format($tsk['JmlBayar'])?></td>
-                                                        <td class="table-success"><?=$tsk['NamaPetugas']?></td>
+                                                        <?php if ($tsk['Keterangan'] == 'kosong') :?>
+                                                            <td colspan="3" class="table-danger text-danger">KOSONG</td>
+                                                        <?php endif?>
+                                                        <?php if ($tsk['Keterangan'] == null) :?>
+                                                            <td class="table-success"><?=$tsk['TanggalBayar']?></td>
+                                                            <td class="table-success"><?=number_format($tsk['JmlBayar'])?></td>
+                                                            <td class="table-success"><?=$tsk['NamaPetugas']?></td>
+                                                        <?php endif?>
                                                     <?php endif?>
                                                     <?php if ($tsk['IdPetugas'] == null) :?>
                                                         <td colspan="3" class="table-danger">Belum Dibayar</td>
