@@ -432,7 +432,7 @@ public function dashboard(){
     }
     public function tambah(){
         $idtransaksi = 'TRS'.date('y').''.date('m').''.date('d');
-        $warga = $this->vms->getSelectData('IdWarga','tablewarga');
+        $warga = $this->vms->getSelectGroupBy('IdWarga','tablerwarga','IdWarga')->result_array();
         $idiuran = $this->vms->getSelectData('MAX(IdIuran) as IdIuran','tableiuran');
         $iuran = $this->vms->getSelectWhereData('IdIuran','tableiuran',['IdIuran'=>$idiuran[0]['IdIuran']]);
         $tahun = $this->vms->getSelectWhereData('IdTahunIuran','tabletahuniuran',['IdTahunIuran'=>$this->vms->getSelectData('MAX(IdTahunIuran) as IdTahunIuran','tabletahuniuran')[0]['IdTahunIuran']]);

@@ -50,6 +50,12 @@ class vmsModel extends CI_Model {
         // return $this->db->get()->result();
         return $this->db->count_all_results();
     }
+    public function getSelectGroupBy($select, $tabel, $group){
+        $this->db->select($select);
+        $this->db->from($tabel);
+        $this->db->group_by($group);
+        return $this->db->get();
+    }
     public function getSelect($select, $table, $data){
         $this->db->select($select);
         $this->db->from($table);
