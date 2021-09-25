@@ -8,7 +8,7 @@ class transaksiModel extends CI_Model {
     var $order = array('IdTransaksi'=>'asc');
 
     private function get_datatables_query(){
-        $this->db->select('tabletransaksi.IdTransaksi, tabletransaksi.IdWarga, tabletransaksi.IdIuran, tabletransaksi.IdBulan, tabletransaksi.IdTahun, tabletransaksi.IdPetugas, tabletransaksi.JmlBayar, tabletransaksi.TanggalBayar, tabletransaksi.InputTransaksi, tablewarga.Nama, tablebulaniuran.NamaBulan, tabletahuniuran.NamaTahun, tableiuran.TotalIuran,  tablepetugas.NamaPetugas');
+        $this->db->select('tabletransaksi.IdTransaksi, tabletransaksi.IdWarga, tabletransaksi.IdIuran, tabletransaksi.IdBulan, tabletransaksi.IdTahun, tabletransaksi.IdPetugas, tabletransaksi.JmlBayar, tabletransaksi.TanggalBayar, tabletransaksi.InputTransaksi, tabletransaksi.Keterangan, tablewarga.Nama, tablebulaniuran.NamaBulan, tabletahuniuran.NamaTahun, tableiuran.TotalIuran,  tablepetugas.NamaPetugas');
         $this->db->from($this->table);
         $this->db->join('tablewarga', 'tablewarga.IdWarga = tabletransaksi.IdWarga', 'inner');
         $this->db->join('tablebulaniuran', 'tablebulaniuran.IdBulanIuran = tabletransaksi.IdBulan','inner');

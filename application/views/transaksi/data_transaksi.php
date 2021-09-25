@@ -45,24 +45,50 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                  <div class="col-md">
-                  <table class="table table-striped table-bordered" id="tabletransaksi">
-                    <thead>
-                      <tr>
-                        <th scope="col">No</th>
-                        <th scope="col">Id Transaksi</th>
-                        <th scope="col">Nama Warga</th>
-                        <th scope="col">Total Iuran</th>
-                        <th scope="col">Bulan / Tahun</th>
-                        <th scope="col">Nama Petugas</th>
-                        <th scope="col">Jumlah</th>
-                        <th scope="col">Tanggal Bayar</th>
-                        <th scope="col">Input Transaksi</th>
-                    </thead>
-                  </table>
+                  <div class="col-md table-responsive">
+                      <table class="table table-striped table-bordered " id="tabletransaksi">
+                        <thead>
+                          <tr>
+                            <th scope="col">No</th>
+                            <th scope="col">Id Transaksi</th>
+                            <th scope="col">Nama Warga</th>
+                            <th scope="col">Total Iuran</th>
+                            <th scope="col">Bulan / Tahun</th>
+                            <th scope="col">Nama Petugas</th>
+                            <th scope="col">Jumlah</th>
+                            <th scope="col">Tanggal Bayar</th>
+                            <th scope="col">Input Transaksi</th>
+                            <th scope="col">Keterangan</th>
+                            <th scope="col">Aksi</th>
+                        </thead>
+                      </table>
                   </div>
                 </div>
             </div>
         </div>
      </div>
+     <!-- modal -->
+    <!-- <div class="modal fade" id="modalEditKet" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalTitle">Modal title</h5>
+          </div>
+          <div class="modal-body">
+          <form action="<?=base_url('Dashboard/update_ket_transaksi')?>" method="post" >
+                      <input type="hidden" name="id_rumah" id="idrumah">
+                      <div class="form-row">
+                          <div class="form-group col-md-12">
+                              <label for="norumah">NoRumah</label>
+                              <input type="text" name="no_rumah" class="form-control" id="norumah">
+                          </div>
+                      </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary btn-block">Simpan</button>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div> -->
 </div>

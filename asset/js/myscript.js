@@ -430,6 +430,37 @@ $(document).ready(function () {
 			},
 		});
 	});
+
+	//button edit keterangan menu transaksi
+	$("#tabletransaksi").on("click", ".btnEditKet", function () {
+		let id = $(this).data("id");
+		$.ajax({
+			url: base_url + "Admin/update_ket_transaksi",
+			type: "post",
+			dataType: "json",
+			data: { id: id },
+			success: function (data) {
+				if (data.status == "berhasil") {
+					Swal.fire({
+						title: "Keterangan transaksi",
+						text: "Berhasil dirubah",
+						icon: "success",
+					}).then((result) => {
+						window.location = base_url + "Admin/datatransaksi";
+					});
+				} else if (data.status == "gagal") {
+					Swal.fire({
+						title: "Keterangan transaksi",
+						text: "Gagal dirubah",
+						icon: "error",
+					}).then((result) => {
+						window.location = base_url + "Admin/datatransaksi";
+					});
+				}
+			},
+		});
+		return false;
+	});
 	//btn-hapus petugas
 	// $('#tablepetugas').on('click', '.btnHapusPetugas', function(){
 	//     let id = $(this).data('id');

@@ -118,6 +118,12 @@ class Datatables extends CI_Controller {
             $row[] = $field->JmlBayar;
             $row[] = $field->TanggalBayar;
             $row[] = $field->InputTransaksi;
+            $row[] = $field->Keterangan;
+            if($field->Keterangan == 'kosong'){
+                $row[] = '<button type="button" class="btn btn-warning btnEditKet" data-id="'.$field->IdTransaksi.'">Keterangan</button>';
+            }else{
+                $row[] = '';
+            }
 
             $data[] = $row;
         }

@@ -478,4 +478,20 @@ public function dashboard(){
         // var_dump($cek);
             // var_dump($data);
     }
+    public function update_ket_transaksi(){
+        $id = $this->input->post('id', true);
+            if($this->vms->update('tabletransaksi',array('IdTransaksi'=>$id),['IdPetugas'=>null, 'JmlBayar'=>null, 'TanggalBayar'=>null, 'Keterangan'=>null])){
+                $data = array(
+                    'IdLogTransaksi' => '',
+                    'LogAuthorTransaksi' => $this->session->userdata('role').' | '.$this->session->userdata('Nama'),
+                    'LogKetTransaksi' => 'Merubah Data Keterangan pada TABLETRANSAKSI | data IdTransaksi = '.$id,
+                    'LogCreated' => date('Y-m-d H:i:s')    
+                );
+                $this->vms->insert($data, 'tablelogtransaksi');
+                $data = ['status'=>'berhasil'];
+            }else{
+                $data = ['status'=>'gagal'];
+            }
+            echo json_encode($data);
+    }
 }
