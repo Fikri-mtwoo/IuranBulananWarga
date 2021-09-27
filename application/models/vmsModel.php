@@ -129,4 +129,17 @@ class vmsModel extends CI_Model {
             return $query;
         }
     }
+    public function getJoinKontrak($select, $where){
+        $this->db->select($select);
+        $this->db->from('tablekontrak');
+        $this->db->join('tablewarga', 'tablewarga.IdWarga = tablekontrak.IdWarga', 'inner');
+        $this->db->join('tablerumah', 'tablerumah.IdRumah = tablekontrak.IdRumah', 'inner');
+        $this->db->where($where);
+        $query =  $this->db->get();
+        if($query->num_rows() == 0){
+            return null;
+        }else{
+            return $query;
+        }
+    }
 }

@@ -14,6 +14,7 @@ class Datatables extends CI_Controller {
         $this->load->model('rumahModel','rm');
         $this->load->model('rumahwargaModel','rwm');
         $this->load->model('iuranModel','im');
+        $this->load->model('kontrakModel','km');
     }
     public function get_data_user(){
         $list = $this->admin->get_datatables();
@@ -237,6 +238,35 @@ class Datatables extends CI_Controller {
             "draw" => $_POST['draw'],
             "recordsTotal" => $this->im->count_all(),
             "recordsFiltered" => $this->im->count_filtered(),
+            "data" => $data,
+        );
+        //output dalam format JSON
+        echo json_encode($output);
+    }
+    //menu kontrak
+    public function get_data_kontrak(){
+        $list = $this->km->get_datatables();
+        $data = array();
+        $no = $_POST['start'];
+        foreach ($list as $field) {
+            $no++;
+            $row = array();
+            $row[] = $no;
+            $row[] = $field->Nama;
+            $row[] = $field->NoRumah;
+            $row[] = $field->JmlBulanKontrak." Bulan";
+            $row[] = $field->TanggalMasuk;
+            $row[] = $field->TanggalKeluar;
+            $row[] = $field->StatusKontrak;
+            $row[] = "<button type='button' class='btn btn-primary btnEditKontrak' data-id='".$field->IdKontrak."'>Ubah</button>";
+
+            $data[] = $row;
+        }
+ 
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->km->count_all(),
+            "recordsFiltered" => $this->km->count_filtered(),
             "data" => $data,
         );
         //output dalam format JSON

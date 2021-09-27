@@ -161,6 +161,25 @@ $(document).ready(function () {
 		],
 	});
 
+	//datatables kontrak
+	$("#tablekontrak").DataTable({
+		processing: true,
+		serverSide: true,
+		order: [],
+
+		ajax: {
+			url: base_url + "Datatables/get_data_kontrak",
+			type: "POST",
+		},
+
+		columnDefs: [
+			{
+				targets: [0, 2, 3, 6, 7],
+				orderable: false,
+			},
+		],
+	});
+
 	//btn change pada menu transaksi
 	$("#bulan").change(function () {
 		table.ajax.reload();
@@ -462,6 +481,31 @@ $(document).ready(function () {
 		});
 		return false;
 	});
+
+	//modal edit kontrak
+	var modalkontrak = $("#modalEditKontrak");
+	var titlemodalkontrak = $("#modalTitle");
+	$("#tablekontrak").on("click", ".btnEditKontrak", function () {
+		let id = $(this).data("id");
+		$.ajax({
+			url: base_url + "Kontrak/get_data_rumahkontrak",
+			type: "post",
+			dataType: "json",
+			data: { id: id },
+			success: function (data) {
+				titlemodalkontrak.text("Edit Data Rumah Kontrak");
+				$(".text-primary").val(data.id_warga).text(data.nama);
+				$('[name="id_kontrak"]').val(data.id_kontrak);
+				$('[name="id_rumah"]').val(data.id_rumah);
+				$('[name="no_rumah"]').val(data.no_rumah).attr("readonly", "readonly");
+				$('[name="jml_bulan"]').val(data.jml_bulan);
+				$('[name="tgl_masuk"]').val(data.tgl_masuk);
+				modalkontrak.modal("show");
+			},
+		});
+		return false;
+	});
+
 	//btn-hapus petugas
 	// $('#tablepetugas').on('click', '.btnHapusPetugas', function(){
 	//     let id = $(this).data('id');

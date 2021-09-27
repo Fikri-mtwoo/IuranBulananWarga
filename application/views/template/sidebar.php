@@ -56,6 +56,7 @@
             <div class="bg-white py-2 collapse-inner rounded">
               <h6 class="collapse-header">Data Relasi:</h6>
               <a class="collapse-item" href="<?=base_url('RumahWarga')?>">Rumah Warga</a>
+              <a class="collapse-item" href="<?=base_url('Kontrak')?>">Rumah Kontrak</a>
               <a class="collapse-item" href="<?=base_url('Admin/datatransaksi')?>">Transaksi</a>
             </div>
           </div>
