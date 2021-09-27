@@ -443,6 +443,7 @@ $(document).ready(function () {
 					$(".select").text(data.warga);
 					// $('select[name="id_warga"]').children("option").val(data.warga);
 					$('[name="idrw"]').val(data.id_rm);
+					$('[name="id_warga_lama"]').val(data.id_warga);
 					$('[name="id_rumah"]').val(data.id_rumah);
 					$('[name="no_rumah"]').val(data.rumah).attr("readonly", "readonly");
 					modalrw.modal("show");

@@ -24,26 +24,37 @@ class RumahWarga extends CI_Controller {
         ]);
         if($this->form_validation->run() == FALSE){
             $data['warga'] = $this->vm->getSelectData('IdWarga, Nama', 'tablewarga'); 
-            $data['rumah'] = $this->vm->getSelectData('IdRumah, NoRumah', 'tablerumah'); 
+            $data['rumah'] = $this->vm->getSelectWhereData('IdRumah, NoRumah', 'tablerumah', ['StatusRumah'=>'tetap']); 
             template('rumahwarga/tambah', $data);
         }else{
-           $data = [
-               'IdWarga' => $this->input->post('id_warga'),
-               'IdRumah' => $this->input->post('id_rumah')
-           ];
-           if($this->vm->insert($data, 'tablerwarga')){
-            $data = array(
-                'IdLog' => '',
-                'LogAuthor' => $this->session->userdata('role').' | '.$this->session->userdata('Nama'),
-                'LogDes' => 'Menambahkan Data pada TABELRWARGA |'.$this->input->post('id_rumah',true).'dan'.$this->input->post('id_warga'),
-                'LogCreated' => date('Y-m-d H:i:s')    
-            );
-            $this->vm->insert($data, 'tablelog');
-            $this->session->set_flashdata(['flash'=>'berhasil', 'name'=>'rumahwarga', 'type'=>'insert']);
-            redirect(base_url('RumahWarga'));
+            $waktu = new DateTime();
+            $id = $waktu->getTimestamp();
+            $data = [
+                'IdRWarga' => $id,
+                'IdWarga' => $this->input->post('id_warga',true),
+                'IdRumah' => $this->input->post('id_rumah',true)
+            ];           
+            $tagihan = [
+                'IdPemilikRumah' => $id,
+                'IdWarga' => $this->input->post('id_warga',true)
+            ];
+            if($this->vm->insert($data, 'tablerwarga')){
+                $cek_tagihan = $this->vm->getSelect('', 'tabletagihan', ['IdWarga'=>$this->input->post('id_warga',true)]);
+                if($cek_tagihan == null){
+                    $this->vm->insert($tagihan, 'tabletagihan');
+                }
+                $data = array(
+                    'IdLog' => '',
+                    'LogAuthor' => $this->session->userdata('role').' | '.$this->session->userdata('Nama'),
+                    'LogDes' => 'Menambahkan Data pada TABELRWARGA |'.$this->input->post('id_rumah',true).'dan'.$this->input->post('id_warga'),
+                    'LogCreated' => date('Y-m-d H:i:s')    
+                );
+                $this->vm->insert($data, 'tablelog');
+                $this->session->set_flashdata(['flash'=>'berhasil', 'name'=>'rumahwarga', 'type'=>'insert']);
+                redirect(base_url('RumahWarga'));
             }else{
-            $this->session->set_flashdata(['flash'=>'gagal', 'name'=>'rumahwarga', 'type'=>'insert']);
-            redirect(base_url('RumahWarga'));
+                $this->session->set_flashdata(['flash'=>'gagal', 'name'=>'rumahwarga', 'type'=>'insert']);
+                redirect(base_url('RumahWarga'));
             }
         }
     }
@@ -66,10 +77,29 @@ class RumahWarga extends CI_Controller {
     }
     public function update(){
         $data = [
-            "IdWarga" => $this->input->post('id_warga'),
-            "IdRumah" => $this->input->post('id_rumah')
+            "IdWarga" => $this->input->post('id_warga',true),
+            "IdRumah" => $this->input->post('id_rumah',true)
         ];
-        if($this->vm->update('tablerwarga', ['IdRWarga'=>$this->input->post('idrw')], $data)){
+        $tagihan = [
+            'IdPemilikRumah' => $this->input->post('idrw',true),
+            'IdWarga' => $this->input->post('id_warga',true)
+        ];
+        if($this->vm->update('tablerwarga', ['IdRWarga'=>$this->input->post('idrw',true)], $data)){
+            $cek_pemilik = $this->vm->getSelect('', 'tablerwarga', ['IdWarga'=>$this->input->post('id_warga_lama',true)]);
+            if($cek_pemilik == null){
+                $cek_tagihan = $this->vm->getSelect('', 'tabletagihan', ['IdWarga'=>$this->input->post('id_warga',true)]);
+                if($cek_tagihan == null){
+                    $this->vm->delete('tabletagihan', ['IdWarga'=>$this->input->post('id_warga_lama',true)]);
+                    $this->vm->insert($tagihan, 'tabletagihan');
+                }else{
+                    $this->vm->delete('tabletagihan', ['IdWarga'=>$this->input->post('id_warga_lama',true)]);
+                }
+            }else{
+                $cek_tagihan = $this->vm->getSelect('', 'tabletagihan', ['IdWarga'=>$this->input->post('id_warga',true)]);
+                if($cek_tagihan == null){
+                    $this->vm->insert($tagihan, 'tabletagihan');
+                }
+            }
             $data = array(
                 'IdLog' => '',
                 'LogAuthor' => $this->session->userdata('role').' | '.$this->session->userdata('Nama'),

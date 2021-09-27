@@ -51,11 +51,12 @@
         <div class="modal-body">
         <form action="<?=base_url('RumahWarga/update')?>" method="post" >
               <input type="hidden" name="idrw" id="idrw">
+              <input type="hidden" name="id_warga_lama">
               <div class="form-row">
                 <div class="form-group col-md-8">
                   <label for="norumah">NoRumah</label>
                   <select name="id_warga" class="form-control">
-                    <option value="" class="select">Pilih</option>
+                    <option value="" class="text-primary select">Pilih</option>
                     <?php foreach ($warga as $wr) : ?>
                       <option value="<?=$wr['IdWarga']?>"><?=$wr['Nama']?></option>
                     <?php endforeach?>
