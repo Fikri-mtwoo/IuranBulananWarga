@@ -250,6 +250,36 @@ $(document).ready(function () {
 				});
 			}
 		}
+	} else if (nama == "kebijakan") {
+		if (jenis == "insert") {
+			if (notif == "berhasil") {
+				Swal.fire({
+					title: "Data kebijakan",
+					text: "Berhasil ditambah",
+					icon: "success",
+				});
+			} else if (notif == "gagal") {
+				Swal.fire({
+					title: "Data kebijakan",
+					text: "Gagal ditambah",
+					icon: "error",
+				});
+			}
+		} else if (jenis == "update") {
+			if (notif == "berhasil") {
+				Swal.fire({
+					title: "Data kebijakan",
+					text: "Berhasil dirubah",
+					icon: "success",
+				});
+			} else if (notif == "gagal") {
+				Swal.fire({
+					title: "Data kebijakan",
+					text: "Gagal dirubah",
+					icon: "error",
+				});
+			}
+		}
 	}
 	//alert untuk login
 	const pesan = $(".pesan").data("pesan");

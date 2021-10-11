@@ -180,6 +180,25 @@ $(document).ready(function () {
 		],
 	});
 
+	//datatables kebijakan
+	$("#tablekebijakan").DataTable({
+		processing: true,
+		serverSide: true,
+		order: [],
+
+		ajax: {
+			url: base_url + "Datatables/get_data_kebijakan",
+			type: "POST",
+		},
+
+		columnDefs: [
+			{
+				targets: [0, 2, 3],
+				orderable: false,
+			},
+		],
+	});
+
 	//btn change pada menu transaksi
 	$("#bulan").change(function () {
 		table.ajax.reload();
@@ -505,6 +524,36 @@ $(document).ready(function () {
 			},
 		});
 		return false;
+	});
+
+	//btn-hapus kebijakan
+	$("#tablekebijakan").on("click", ".btnHapusKebijakan", function () {
+		let id = $(this).data("id");
+
+		Swal.fire({
+			title: "Anda yakin?",
+			text: "Ingin menghapus kebijakan ini",
+			icon: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#3085d6",
+			cancelButtonColor: "#d33",
+			confirmButtonText: "Hapus",
+			cancelButtonText: "Tidak",
+		}).then((result) => {
+			if (result.isConfirmed) {
+				$.ajax({
+					url: base_url + "Kebijakan/hapus_data_kebijakan",
+					type: "post",
+					dataType: "json",
+					data: { id: id },
+					success: function (data) {
+						if (data.pesan == "berhasil") {
+							window.location = base_url + "Kebijakan";
+						}
+					},
+				});
+			}
+		});
 	});
 
 	//btn-hapus petugas
