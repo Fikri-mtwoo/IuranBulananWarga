@@ -20,7 +20,7 @@
         <div class="card">
             <div class="card-header d-flex justify-content-between">
                 <p>Data tagihan warga pemilik rumah</p>
-                <a href="<?=base_url('Admin/tambah')?>" class="btn btn-success">Buka Tagihan</a>
+                <a href="<?=base_url('Tagihan/tambah')?>" class="btn btn-success">Buka Tagihan</a>
             </div>
               <div class="card-body">
                   <div class="row">

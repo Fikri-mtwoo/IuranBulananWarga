@@ -430,72 +430,7 @@ public function dashboard(){
         $data['tahun'] = $this->vms->getAll('tabletahuniuran');
         template('transaksi/data_transaksi', $data);
     }
-    public function tambah(){
-        $idtransaksi = 'TRS'.date('y').''.date('m').''.date('d');
-        $warga = $this->vms->getJoinTagihanWarga('tabletagihan.IdWarga, Keterangan')->result_array();
-        $idiuran = $this->vms->getSelectData('MAX(IdIuran) as IdIuran','tableiuran');
-        $iuran = $this->vms->getSelectWhereData('IdIuran','tableiuran',['IdIuran'=>$idiuran[0]['IdIuran']]);
-        $tahun = $this->vms->getSelectWhereData('IdTahunIuran','tabletahuniuran',['IdTahunIuran'=>$this->vms->getSelectData('MAX(IdTahunIuran) as IdTahunIuran','tabletahuniuran')[0]['IdTahunIuran']]);
-        $no=1;
-        $data = [];
-        $cek = $this->vms->getSelectGroup('*','tabletransaksi','InputTransaksi',['Idbulan'=>date('m'), 'IdTahun'=>$tahun[0]['IdTahunIuran']]);
-        if($cek < 1){
-            foreach ($warga as $wrg) {
-                if($wrg['Keterangan'] !== null){
-                    $data [] = [
-                        'IdTransaksi' => $idtransaksi."".$wrg['IdWarga'],
-                        'IdWarga' => $wrg['IdWarga'],
-                        'NIK' => null,
-                        'IdIuran' =>$iuran[0]['IdIuran'],
-                        'IdBulan' => date('m'),
-                        'IdTahun' => $tahun[0]['IdTahunIuran'],
-                        'IdPetugas' => $this->session->userdata('IdPetugas'),
-                        'JmlBayar' => 0,
-                        'TanggalBayar' => date('Y-m-d H:i:s'),
-                        'InputTransaksi' => date('Y-m-d H:i:s'),
-                        'Keterangan' => 'Gratis'
-        
-                    ];
-                }else{
-                    $data [] = [
-                        'IdTransaksi' => $idtransaksi."".$wrg['IdWarga'],
-                        'IdWarga' => $wrg['IdWarga'],
-                        'NIK' => null,
-                        'IdIuran' =>$iuran[0]['IdIuran'],
-                        'IdBulan' => date('m'),
-                        'IdTahun' => $tahun[0]['IdTahunIuran'],
-                        'IdPetugas' => null,
-                        'JmlBayar' => null,
-                        'TanggalBayar' => null,
-                        'InputTransaksi' => date('Y-m-d H:i:s'),
-                        'Keterangan' => null        
-                    ];
-
-                }
-                $log [] = array(
-                    'IdLogTransaksi' => '',
-                    'LogAuthorTransaksi' => $this->session->userdata('role').' | '.$this->session->userdata('Nama'),
-                    'LogKetTransaksi' => 'Menambah Data pada TABLETRANSAKSI | data IdWarga = '.$wrg['IdWarga'],
-                    'LogCreated' => date('Y-m-d H:i:s')    
-                );
-                // $no++;
-            }
-            $hasil = $this->vms->insertBatch($data,'tabletransaksi');
-            if($hasil){
-                    $this->vms->insertBatch($log,'tablelogtransaksi');
-                    $this->session->set_flashdata(['flash'=>'berhasil', 'name'=>'transaksi', 'type'=>'insert']);
-                    redirect(base_url('Admin/datatransaksi'));
-                }else{
-                    $this->session->set_flashdata(['flash'=>'gagal', 'name'=>'transaksi', 'type'=>'insert']);
-                    redirect(base_url('Admin/datatransaksi'));
-                }
-        }else{
-            $this->session->set_flashdata(['flash'=>'gagal', 'name'=>'transaksi', 'type'=>'cek']);
-            redirect(base_url('Admin/datatransaksi'));
-        }
-        // var_dump($cek);
-            // var_dump($data);
-    }
+    
     public function update_ket_transaksi(){
         $id = $this->input->post('id', true);
             if($this->vms->update('tabletransaksi',array('IdTransaksi'=>$id),['IdPetugas'=>null, 'JmlBayar'=>null, 'TanggalBayar'=>null, 'Keterangan'=>null])){
