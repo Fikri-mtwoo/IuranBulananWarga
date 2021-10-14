@@ -20,7 +20,7 @@
       <!-- Nav Item - Dashboard -->
       <?php if($this->session->userdata('role') === 'petugas'){?>
       <li class="nav-item active">
-        <a class="nav-link" href="<?=base_url('dashboard')?>">
+        <a class="nav-link" href="<?=base_url('Admin/tambah_transaksi')?>">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Transaksi</span></a>
       </li>

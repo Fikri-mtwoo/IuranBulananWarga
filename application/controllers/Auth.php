@@ -98,7 +98,7 @@ class Auth extends CI_Controller {
                             'LogCreated' => date('Y-m-d H:i:s')    
                         );
                         $this->vmsModel->insert($data, 'tablelog');
-                        redirect(base_url('Dashboard'));
+                        redirect(base_url('Admin/tambah_transaksi'));
                     }else{
                         $this->session->set_flashdata('pesan','gagal');
                         redirect('Auth/petugas');
