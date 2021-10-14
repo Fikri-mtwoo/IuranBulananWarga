@@ -199,6 +199,25 @@ $(document).ready(function () {
 		],
 	});
 
+	//datatables tagihan
+	$("#tablerumahtetap").DataTable({
+		processing: true,
+		serverSide: true,
+		order: [],
+
+		ajax: {
+			url: base_url + "Datatables/get_data_tagihan",
+			type: "POST",
+		},
+
+		columnDefs: [
+			{
+				targets: [0, 2],
+				orderable: false,
+			},
+		],
+	});
+
 	//btn change pada menu transaksi
 	$("#bulan").change(function () {
 		table.ajax.reload();

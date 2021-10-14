@@ -16,6 +16,7 @@ class Datatables extends CI_Controller {
         $this->load->model('iuranModel','im');
         $this->load->model('kontrakModel','km');
         $this->load->model('kebijakanModel','kbm');
+        $this->load->model('tagihanModel','tm');
     }
     public function get_data_user(){
         $list = $this->admin->get_datatables();
@@ -293,6 +294,30 @@ class Datatables extends CI_Controller {
             "draw" => $_POST['draw'],
             "recordsTotal" => $this->kbm->count_all(),
             "recordsFiltered" => $this->kbm->count_filtered(),
+            "data" => $data,
+        );
+        //output dalam format JSON
+        echo json_encode($output);
+    }
+    //menu tagihan
+    public function get_data_tagihan(){
+        $list = $this->tm->get_datatables();
+        $data = array();
+        $no = $_POST['start'];
+        foreach ($list as $field) {
+            $no++;
+            $row = array();
+            $row[] = $no;
+            $row[] = $field->Nama;
+            $row[] = $field->StatusRumah;
+
+            $data[] = $row;
+        }
+ 
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->tm->count_all(),
+            "recordsFiltered" => $this->tm->count_filtered(),
             "data" => $data,
         );
         //output dalam format JSON
