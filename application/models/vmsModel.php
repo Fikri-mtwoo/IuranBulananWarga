@@ -153,4 +153,15 @@ class vmsModel extends CI_Model {
             return $query;
         }
     }
+    public function getJoinTagihanWarga($select){
+        $this->db->select($select);
+        $this->db->from('tabletagihan');
+        $this->db->join('tablekebijakan', 'tablekebijakan.IdWarga = tabletagihan.IdWarga', 'left');
+        $query =  $this->db->get();
+        if($query->num_rows() == 0){
+            return null;
+        }else{
+            return $query;
+        }
+    }
 }
