@@ -447,4 +447,46 @@ public function dashboard(){
             }
             echo json_encode($data);
     }
+
+    public function tambah_transaksi(){
+        $this->load->library('encryption');
+        $this->form_validation->set_error_delimiters('<small class="text-danger">', '</small>');
+        $this->form_validation->set_rules('nik','Nama Warga','trim|required|callback_nik_validate');
+        $this->form_validation->set_rules('bulan','Bulan','trim|required|callback_bulan_validate');
+        // $this->form_validation->set_rules('petugas','Petugas','trim|required|callback_petugas_validate');
+        $this->form_validation->set_rules('jmlbayar','Jumlah Bayar','trim|required', array('required'=>'Jumlah bayar tidak boleh kosong'));
+        
+        if($this->form_validation->run() == FALSE){
+            $data['warga'] = $this->vms->getAll('tablewarga');
+            
+            template('dashboard', $data);            
+        }else{
+            $idwarga        = $this->encryption->decrypt($this->input->post('nik',true));
+            $idbulan        = $this->input->post('bulan',true);
+            $idtahun        = $this->input->post('tahun',true);
+            $idpetugas      = $this->session->userdata('IdPetugas');
+            $jmlbayar       = $this->input->post('jmlbayar',true);
+            $tanggalbayar   = date('Y-m-d H:i:s');
+            $IdTransaksi    = $this->encryption->decrypt($this->input->post('transaksi',true));
+            $data = array(
+            'IdPetugas'=> $idpetugas,
+            'JmlBayar'=> $jmlbayar,
+            'TanggalBayar'=> $tanggalbayar
+            );
+            if($this->vms->update('tabletransaksi',['IdTransaksi'=>$IdTransaksi, 'Idwarga'=>$idwarga, 'IdBulan'=>$idbulan, 'IdTahun'=>$idtahun],$data)){
+                $data = array(
+                    'IdLogTransaksi' => '',
+                    'LogAuthorTransaksi' => $this->session->userdata('role').' | '.$this->session->userdata('Nama'),
+                    'LogKetTransaksi' => 'Merubah TABLETRANSAKSI |sebesar Rp. '.$jmlbayar.' idwarga = '.$idwarga.'idtransaksi = '.$IdTransaksi,
+                    'LogCreated' => date('Y-m-d H:i:s')    
+                );
+                $this->vms->insert($data, 'tablelogtransaksi');
+                $this->session->set_flashdata(['flash'=>'berhasil', 'name'=>'transaksi','type'=>'update']);
+                redirect(base_url('Dashboard'));
+            }else{
+                $this->session->set_flashdata(['flash'=>'gagal', 'name'=>'transaksi','type'=>'update']);
+                redirect(base_url('Dashboard'));
+            }
+        }  
+    }
 }

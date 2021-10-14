@@ -13,7 +13,7 @@
             <div class="card-header">
               <div class="form-row">
                 <div class="col-auto">
-                  <a href="<?=base_url('Admin/tambah')?>" class="btn btn-success">Tambah data</a>
+                  <a href="<?=base_url('Admin/tambah_transaksi')?>" class="btn btn-success">Tambah data</a>
                 </div>
                 <div class="col-5">
                   <div class="form-group row">
