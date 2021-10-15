@@ -44,7 +44,8 @@ class Kontrak extends CI_Controller {
            ];
            $tagihan = [
                'IdPemilikRumah' => $id,
-               'IdWarga' => $this->input->post('id_warga',true)
+               'IdWarga' => $this->input->post('id_warga',true),
+               'StatusRumah' => 'kontrak'
            ];
            if($this->vm->insert($data, 'tablekontrak') && $this->vm->insert($tagihan, 'tabletagihan')){
             $data = array(
