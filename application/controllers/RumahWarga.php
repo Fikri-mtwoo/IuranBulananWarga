@@ -36,7 +36,8 @@ class RumahWarga extends CI_Controller {
             ];           
             $tagihan = [
                 'IdPemilikRumah' => $id,
-                'IdWarga' => $this->input->post('id_warga',true)
+                'IdWarga' => $this->input->post('id_warga',true),
+                'StatusRumah' => 'tetap'
             ];
             if($this->vm->insert($data, 'tablerwarga')){
                 $cek_tagihan = $this->vm->getSelect('', 'tabletagihan', ['IdWarga'=>$this->input->post('id_warga',true)]);
@@ -82,7 +83,8 @@ class RumahWarga extends CI_Controller {
         ];
         $tagihan = [
             'IdPemilikRumah' => $this->input->post('idrw',true),
-            'IdWarga' => $this->input->post('id_warga',true)
+            'IdWarga' => $this->input->post('id_warga',true),
+            'StatusRumah' => 'tetap'
         ];
         if($this->vm->update('tablerwarga', ['IdRWarga'=>$this->input->post('idrw',true)], $data)){
             $cek_pemilik = $this->vm->getSelect('', 'tablerwarga', ['IdWarga'=>$this->input->post('id_warga_lama',true)]);
