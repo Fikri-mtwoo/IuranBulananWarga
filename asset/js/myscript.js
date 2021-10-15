@@ -545,6 +545,35 @@ $(document).ready(function () {
 		return false;
 	});
 
+	//btn selesai kontrak
+	$("#tablekontrak").on("click", ".btnSelesai", function () {
+		let id = $(this).data("id");
+		Swal.fire({
+			title: "Anda yakin?",
+			text: "Ingin selesai kontrak rumah ini",
+			icon: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#3085d6",
+			cancelButtonColor: "#d33",
+			confirmButtonText: "Selesai",
+			cancelButtonText: "Tidak",
+		}).then((result) => {
+			if (result.isConfirmed) {
+				$.ajax({
+					url: base_url + "Kontrak/selesai_kontrak",
+					type: "post",
+					dataType: "json",
+					data: { id: id },
+					success: function (data) {
+						if (data.pesan == "berhasil") {
+							window.location = base_url + "Kontrak";
+						}
+					},
+				});
+			}
+		});
+	});
+
 	//btn-hapus kebijakan
 	$("#tablekebijakan").on("click", ".btnHapusKebijakan", function () {
 		let id = $(this).data("id");

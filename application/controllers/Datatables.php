@@ -260,7 +260,11 @@ class Datatables extends CI_Controller {
             $row[] = $field->TanggalMasuk;
             $row[] = $field->TanggalKeluar;
             $row[] = $field->StatusKontrak;
-            $row[] = "<button type='button' class='btn btn-primary btnEditKontrak' data-id='".$field->IdKontrak."'>Ubah</button>";
+            if($field->StatusKontrak == 'selesai'){
+                $row[] = "<button type='button' class='btn btn-primary btnEditKontrak' data-id='".$field->IdKontrak."'>Ubah</button>";
+            }else{
+                $row[] = "<button type='button' class='btn btn-primary btnEditKontrak' data-id='".$field->IdKontrak."'>Ubah</button> |<button type='button' class='btn btn-danger btnSelesai' data-id='".$field->IdKontrak."'>Selesai</button> ";
+            }
 
             $data[] = $row;
         }

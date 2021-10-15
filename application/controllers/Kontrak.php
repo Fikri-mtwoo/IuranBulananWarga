@@ -107,4 +107,24 @@ class Kontrak extends CI_Controller {
             redirect(base_url('Kontrak'));
         }
     }
+
+    public function selesai_kontrak(){
+        $waktu = new DateTime();
+        $data = [
+            'TanggalKeluar' => $waktu->format('Y-m-d'),
+            'StatusKontrak' => 'selesai'
+        ];
+        if($this->vm->update('tablekontrak',['IdKontrak'=>$this->input->post('id', true)], $data)){
+            $this->vm->delete('tabletagihan', ['IdPemilikRumah'=>$this->input->post('id', true)]);
+            $data = array(
+                'IdLog' => '',
+                'LogAuthor' => $this->session->userdata('role').' | '.$this->session->userdata('Nama'),
+                'LogDes' => 'Merubah Data pada TABLEKONTRAK |idkontrak. '.$this->input->post('id',true).'status kontrak menjadi selesai',
+                'LogCreated' => date('Y-m-d H:i:s')    
+            );
+            $this->vm->insert($data, 'tablelog');
+            $data = array('pesan'=>'berhasil');
+        }
+        echo json_encode($data);
+    }
 }
