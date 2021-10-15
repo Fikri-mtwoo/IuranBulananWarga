@@ -116,7 +116,7 @@ class Datatables extends CI_Controller {
             $row[] = $field->IdTransaksi;
             $row[] = $field->Nama;
             $row[] = $field->TotalIuran;
-            $row[] = $field->NamaBulan."/".$field->NamaTahun;
+            $row[] = $field->NamaBulan."/".$field->IdTahun;
             $row[] = $field->NamaPetugas;
             $row[] = $field->JmlBayar;
             $row[] = $field->TanggalBayar;

@@ -35,7 +35,7 @@
                       <select class="form-control" name="tahun" id="tahun">
                           <option value="" selected>Pilih Tahun</option>
                         <?php foreach ($tahun as $t) :?>
-                          <option value="<?=$t['IdTahunIuran']?>"><?=$t['NamaTahun']?></option>
+                          <option value="<?=$t['IdTahun']?>"><?=$t['IdTahun']?></option>
                         <?php endforeach?>
                       </select>
                     </div>

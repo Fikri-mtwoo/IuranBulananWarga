@@ -427,7 +427,7 @@ public function dashboard(){
             redirect(base_url('Dashboard/pengguna'));
         }
         $data['bulan'] = $this->vms->getAll('tablebulaniuran');
-        $data['tahun'] = $this->vms->getAll('tabletahuniuran');
+        $data['tahun'] = $this->vms->getSelectGroupBy('IdTahun','tabletransaksi','IdTahun')->result_array();
         template('transaksi/data_transaksi', $data);
     }
     
