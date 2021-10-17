@@ -70,10 +70,12 @@ public function dashboard(){
         $this->form_validation->set_rules('nik','Nama Warga','trim|required');
         $this->form_validation->set_rules('username','Username','trim|required');
         $this->form_validation->set_rules('password','Password','trim|required');
+        $this->form_validation->set_rules('role','Role','trim|required');
 
         $this->form_validation->set_error_delimiters('<small class="text-danger">', '</small>');
         if($this->form_validation->run() == FALSE){
             $data['warga'] = $this->vms->getAll('tablewarga');
+            $data['role'] = $this->vms->getAll('tablerole');
             template('akun_petugas', $data);
         }else{
             $data = explode('/', $this->input->post('nik',true));
@@ -86,7 +88,9 @@ public function dashboard(){
                 'NIK'=>$nik,
                 'NamaPetugas'=>$nama,
                 'Username'=>$username,
-                'PasswordPetugas'=>$password
+                'PasswordPetugas'=>$password,
+                'IdRole' => $this->input->post('role', true),
+                'Status' => 0
             );
 
             if($this->vms->insert($data, 'tablepetugas')){
