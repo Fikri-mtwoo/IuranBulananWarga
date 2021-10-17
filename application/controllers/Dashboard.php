@@ -151,7 +151,7 @@ class Dashboard extends CI_Controller {
                     'iBulan'=> $b['IdBulan'],
                     'iTahun'=> $b['IdTahun'],
                     'bulan' => bulan($b['IdBulan']),
-                    'tahun' => tahun($b['IdTahun'])
+                    'tahun' => $b['IdTahun']
                 ];
             }
         }else{
