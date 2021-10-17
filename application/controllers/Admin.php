@@ -322,6 +322,40 @@ public function dashboard(){
         echo json_encode($data);
     }
 
+    public function update_aktif_akun_petugas(){
+        $id = $this->input->post('id', true);
+            if($this->vms->update('tablepetugas',array('IdPetugas'=>$id),['Status'=>1])){
+                $data = array(
+                    'IdLog' => '',
+                    'LogAuthor' => $this->session->userdata('role').' | '.$this->session->userdata('Nama'),
+                    'LogDes' => 'Merubah Data Status pada TABLEPETUGAS  | data IdPetugas = '.$id,
+                    'LogCreated' => date('Y-m-d H:i:s')    
+                );
+                $this->vms->insert($data, 'tablelog');
+                $data = ['status'=>'berhasil'];
+            }else{
+                $data = ['status'=>'gagal'];
+            }
+            echo json_encode($data);
+    }
+
+    public function update_non_aktif_akun_petugas(){
+        $id = $this->input->post('id', true);
+            if($this->vms->update('tablepetugas',array('IdPetugas'=>$id),['Status'=>0])){
+                $data = array(
+                    'IdLog' => '',
+                    'LogAuthor' => $this->session->userdata('role').' | '.$this->session->userdata('Nama'),
+                    'LogDes' => 'Merubah Data Status pada TABLEPETUGAS | data IdPetugas = '.$id,
+                    'LogCreated' => date('Y-m-d H:i:s')    
+                );
+                $this->vms->insert($data, 'tablelog');
+                $data = ['status'=>'berhasil'];
+            }else{
+                $data = ['status'=>'gagal'];
+            }
+            echo json_encode($data);
+    }
+
 //menu pengguna
     public function dataakunpengguna(){
         if(!$this->session->userdata('status')){

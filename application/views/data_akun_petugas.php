@@ -24,19 +24,17 @@
             <div class="card-body">
                 <div class="row">
                   <div class="col-md">
-                  <table class="table table-striped table-bordered" id="tablepetugas">
+                  <table class="table table-striped table-bordered text-center" id="tablepetugas">
                     <thead>
                       <tr>
                         <th scope="col">No</th>
-                        <th scope="col">Nomor Induk Keluarga(NIK)</th>
-                        <th scope="col">Nama Petugas</th>
+                        <th scope="col">NIK</th>
+                        <th scope="col">Nama</th>
                         <th scope="col">Username</th>
-                        <th scope="col">Ubah</th>
-                        <th scope="col">Hapus</th>
+                        <th scope="col">Status Akun</th>
+                        <th scope="col">Aksi</th>
                       </tr>
                     </thead>
-                    <tbody>
-                    </tbody>
                   </table>
                   </div>
                 </div>

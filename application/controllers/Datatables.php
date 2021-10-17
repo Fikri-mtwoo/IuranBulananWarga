@@ -55,9 +55,16 @@ class Datatables extends CI_Controller {
             $row[] = $field->NIK;
             $row[] = $field->NamaPetugas;
             $row[] = $field->Username;
-            // $row[] = $field->PasswordPetugas;
-            $row[] = "<button type='button' class='btn btn-primary btnEditPetugas' data-id='".$field->IdPetugas."'>Edit</button>";
-            $row[] = "<button type='button' class='btn btn-danger ' data-id='".$field->IdPetugas."' data-nik='".$field->NIK."'>Hapus</button>";
+            if($field->Status == 0){
+                $row[] = "<p class='text-center text-danger'>Belum Aktif</p>";
+            }else{
+                $row[] = "<p class='text-center text-success'>Aktif</p>";
+            }
+            if($field->Status == 0){
+                $row[] = "<button type='button' class='btn btn-primary btnEditPetugas' data-id='".$field->IdPetugas."'>Edit</button> | <button type='button' class='btn btn-success btnAktifAkunPetugas' data-id='".$field->IdPetugas."'>Aktif</button>";
+            }else{
+                $row[] = "<button type='button' class='btn btn-primary btnEditPetugas' data-id='".$field->IdPetugas."'>Edit</button> | <button type='button' class='btn btn-danger btnNonAktifAkunPetugas' data-id='".$field->IdPetugas."'>Non Aktif</button>";
+            }
 
             $data[] = $row;
         }

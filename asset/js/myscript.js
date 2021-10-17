@@ -36,10 +36,6 @@ $(document).ready(function () {
 				targets: [0, 1, 3, 4, 5],
 				orderable: false,
 			},
-			{
-				targets: [5],
-				visible: false,
-			},
 		],
 	});
 
@@ -434,6 +430,68 @@ $(document).ready(function () {
 						icon: "error",
 					}).then((result) => {
 						window.location = base_url + "Admin/dataakunpengguna";
+					});
+				}
+			},
+		});
+		return false;
+	});
+
+	//btn aktif akun petugas
+	$("#tablepetugas").on("click", ".btnAktifAkunPetugas", function () {
+		let id = $(this).data("id");
+		$.ajax({
+			url: base_url + "Admin/update_aktif_akun_petugas",
+			type: "post",
+			dataType: "json",
+			data: { id: id },
+			success: function (data) {
+				if (data.status == "berhasil") {
+					Swal.fire({
+						title: "Akun petugas",
+						text: "Berhasil diaktivasi",
+						icon: "success",
+					}).then((result) => {
+						window.location = base_url + "Admin/dataakunpetugas";
+					});
+				} else if (data.status == "gagal") {
+					Swal.fire({
+						title: "Akun petugas",
+						text: "Gagal diaktivasi",
+						icon: "error",
+					}).then((result) => {
+						window.location = base_url + "Admin/dataakunpetugas";
+					});
+				}
+			},
+		});
+		return false;
+	});
+
+	//btn non aktif akun petugas
+	$("#tablepetugas").on("click", ".btnNonAktifAkunPetugas", function () {
+		let id = $(this).data("id");
+		$.ajax({
+			url: base_url + "Admin/update_non_aktif_akun_petugas",
+			type: "post",
+			dataType: "json",
+			data: { id: id },
+			success: function (data) {
+				if (data.status == "berhasil") {
+					Swal.fire({
+						title: "Akun petugas",
+						text: "Berhasil dinon aktivasi",
+						icon: "success",
+					}).then((result) => {
+						window.location = base_url + "Admin/dataakunpetugas";
+					});
+				} else if (data.status == "gagal") {
+					Swal.fire({
+						title: "Akun petugas",
+						text: "Gagal dinon aktivasi",
+						icon: "error",
+					}).then((result) => {
+						window.location = base_url + "Admin/dataakunpetugas";
 					});
 				}
 			},
