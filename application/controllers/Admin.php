@@ -475,7 +475,24 @@ public function dashboard(){
                 $data = array(
                     'IdLogTransaksi' => '',
                     'LogAuthorTransaksi' => $this->session->userdata('role').' | '.$this->session->userdata('Nama'),
-                    'LogKetTransaksi' => 'Merubah Data Keterangan pada TABLETRANSAKSI | data IdTransaksi = '.$id,
+                    'LogKetTransaksi' => 'Merubah Data Keterangan kosong pada TABLETRANSAKSI | data IdTransaksi = '.$id,
+                    'LogCreated' => date('Y-m-d H:i:s')    
+                );
+                $this->vms->insert($data, 'tablelogtransaksi');
+                $data = ['status'=>'berhasil'];
+            }else{
+                $data = ['status'=>'gagal'];
+            }
+            echo json_encode($data);
+    }
+
+    public function update_kebijakan_transaksi(){
+        $id = $this->input->post('id', true);
+            if($this->vms->update('tabletransaksi',array('IdTransaksi'=>$id),['IdPetugas'=>null, 'JmlBayar'=>null, 'TanggalBayar'=>null, 'Keterangan'=>null])){
+                $data = array(
+                    'IdLogTransaksi' => '',
+                    'LogAuthorTransaksi' => $this->session->userdata('role').' | '.$this->session->userdata('Nama'),
+                    'LogKetTransaksi' => 'Merubah Data Keterangan gratis pada TABLETRANSAKSI | data IdTransaksi = '.$id,
                     'LogCreated' => date('Y-m-d H:i:s')    
                 );
                 $this->vms->insert($data, 'tablelogtransaksi');

@@ -131,6 +131,8 @@ class Datatables extends CI_Controller {
             $row[] = $field->Keterangan;
             if($field->Keterangan == 'kosong'){
                 $row[] = '<button type="button" class="btn btn-warning btnEditKet" data-id="'.$field->IdTransaksi.'">Keterangan</button>';
+            }else if($field->Keterangan == 'Gratis'){
+                $row[] = '<button type="button" class="btn btn-danger btnEditKebijakan" data-id="'.$field->IdTransaksi.'">Hapus Kebijakan</button>';
             }else{
                 $row[] = '';
             }

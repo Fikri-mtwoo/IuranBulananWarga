@@ -579,6 +579,37 @@ $(document).ready(function () {
 		return false;
 	});
 
+	//btn edit kebijakan menu transaksi
+	$("#tabletransaksi").on("click", ".btnEditKebijakan", function () {
+		let id = $(this).data("id");
+		$.ajax({
+			url: base_url + "Admin/update_kebijakan_transaksi",
+			type: "post",
+			dataType: "json",
+			data: { id: id },
+			success: function (data) {
+				if (data.status == "berhasil") {
+					Swal.fire({
+						title: "Kebijakan transaksi",
+						text: "Berhasil dirubah",
+						icon: "success",
+					}).then((result) => {
+						window.location = base_url + "Admin/datatransaksi";
+					});
+				} else if (data.status == "gagal") {
+					Swal.fire({
+						title: "Kebijakan transaksi",
+						text: "Gagal dirubah",
+						icon: "error",
+					}).then((result) => {
+						window.location = base_url + "Admin/datatransaksi";
+					});
+				}
+			},
+		});
+		return false;
+	});
+
 	//modal edit kontrak
 	var modalkontrak = $("#modalEditKontrak");
 	var titlemodalkontrak = $("#modalTitle");
