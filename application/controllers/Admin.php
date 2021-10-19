@@ -79,33 +79,39 @@ public function dashboard(){
             template('akun_petugas', $data);
         }else{
             $data = explode('/', $this->input->post('nik',true));
-            $nik = $data[0];
+            $idwarga = $data[0];
             $nama = $data[1];
             $username = $this->input->post('username', true);
             $password = password_hash($this->input->post('password', true), PASSWORD_BCRYPT);
             $data = array(
                 'IdPetugas'=> '',
-                'NIK'=>$nik,
+                'NIK'=>$idwarga,
                 'NamaPetugas'=>$nama,
                 'Username'=>$username,
                 'PasswordPetugas'=>$password,
                 'IdRole' => $this->input->post('role', true),
                 'Status' => 0
             );
-
-            if($this->vms->insert($data, 'tablepetugas')){
-                $data = array(
-                    'IdLog' => '',
-                    'LogAuthor' => $this->session->userdata('role').' | '.$this->session->userdata('Nama'),
-                    'LogDes' => 'Menambahkan Data pada TABLEPETUGAS | data NIK = '.$nik,
-                    'LogCreated' => date('Y-m-d H:i:s')    
-                );
-                $this->vms->insert($data, 'tablelog');
-                $this->session->set_flashdata(['flash'=>'berhasil', 'name'=>'petugas', 'type'=>'insert']);
-                redirect(base_url('Admin/dataakunpetugas'));
+            $cek = $this->vms->getSelect('','tablepetugas',['NIK'=>$idwarga]);
+            if($cek){
+                echo "akun sudah terdaftar";
+                $this->session->set_flashdata(['flash'=>'berhasil', 'name'=>'petugas', 'type'=>'cek_akun']);
+                    redirect(base_url('Admin/dataakunpetugas'));
             }else{
-                $this->session->set_flashdata(['flash'=>'gagal', 'name'=>'petugas', 'type'=>'insert']);
-                redirect(base_url('Admin/dataakunpetugas'));
+                if($this->vms->insert($data, 'tablepetugas')){
+                    $data = array(
+                        'IdLog' => '',
+                        'LogAuthor' => $this->session->userdata('role').' | '.$this->session->userdata('Nama'),
+                        'LogDes' => 'Menambahkan Data pada TABLEPETUGAS | data NIK = '.$idwarga,
+                        'LogCreated' => date('Y-m-d H:i:s')    
+                    );
+                    $this->vms->insert($data, 'tablelog');
+                    $this->session->set_flashdata(['flash'=>'berhasil', 'name'=>'petugas', 'type'=>'insert']);
+                    redirect(base_url('Admin/dataakunpetugas'));
+                }else{
+                    $this->session->set_flashdata(['flash'=>'gagal', 'name'=>'petugas', 'type'=>'insert']);
+                    redirect(base_url('Admin/dataakunpetugas'));
+                }
             }
         }
     }

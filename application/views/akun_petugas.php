@@ -30,7 +30,7 @@
                             <select id="nama" name="nik" class="form-control">
                                 <option value="" selected>Choose...</option>
                                 <?php foreach ($warga as $w) {
-                                    echo "<option value='".$w['NIK']."/".$w['Nama']."'>".$w['Nama']."</option>";
+                                    echo "<option value='".$w['IdWarga']."/".$w['Nama']."'>".$w['Nama']."</option>";
                                 }?>
                             </select>
                             <?=form_error('nik')?>

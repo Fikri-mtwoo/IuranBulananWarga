@@ -107,6 +107,14 @@ $(document).ready(function () {
 					icon: "error",
 				});
 			}
+		} else if (jenis == "cek_akun") {
+			if (notif == "berhasil") {
+				Swal.fire({
+					title: "Akun petugas",
+					text: "sudah terdaftar",
+					icon: "success",
+				});
+			}
 		}
 	} else if (nama == "warga") {
 		if (jenis == "insert") {
