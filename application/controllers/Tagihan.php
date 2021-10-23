@@ -21,7 +21,7 @@ class Tagihan extends CI_Controller {
         $tahun = $this->vm->getSelectWhereData('IdTahunIuran','tabletahuniuran',['IdTahunIuran'=>$this->vm->getSelectData('MAX(IdTahunIuran) as IdTahunIuran','tabletahuniuran')[0]['IdTahunIuran']]);
         $no=1;
         $data = [];
-        $cek = $this->vm->getSelectGroup('*','tabletransaksi','InputTransaksi',['Idbulan'=>date('m'), 'IdTahun'=>$tahun[0]['IdTahunIuran']]);
+        $cek = $this->vm->getSelectGroup('*','tabletransaksi','InputTransaksi',['Idbulan'=>date('m'), 'IdTahun'=>date('Y')]);
         if($cek < 1){
             foreach ($warga as $wrg) {
                 if($wrg['Keterangan'] !== null){
