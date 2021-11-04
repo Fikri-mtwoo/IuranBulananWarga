@@ -114,22 +114,7 @@ class Dashboard extends CI_Controller {
     }
 
 
-    public function nik_validate(){
-        if($this->input->post('nik') === 'none'){
-            $this->form_validation->set_message('nik_validate','Nama warga tidak boleh kosong');
-            return false;
-        }else{
-            return true;
-        }
-    }
-    public function bulan_validate(){
-        if($this->input->post('bulan') === 'none'){
-            $this->form_validation->set_message('bulan_validate','Bulan tidak boleh kosong');
-            return false;
-        }else{
-            return true;
-        }
-    }
+    
     public function petugas_validate(){
         if($this->input->post('petugas') === 'none'){
             $this->form_validation->set_message('petugas_validate','Petugas tidak boleh kosong');
