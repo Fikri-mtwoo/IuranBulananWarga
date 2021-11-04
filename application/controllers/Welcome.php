@@ -22,7 +22,7 @@ class Welcome extends CI_Controller {
 	{
 		// $this->load->library('encryption');
 		// $this->punyaku->nama();
-		// $this->load->model('transaksiModel','v');
+		// $this->load->model('vmsModel','v');
 		// echo $this->v->get_datatables();
 		// $pass = password_hash('12345', PASSWORD_BCRYPT);
 		// $data = array(
@@ -30,15 +30,14 @@ class Welcome extends CI_Controller {
 		// 	'NIK' => '3328112802000012',
 		// 	'PasswordPengguna' => $pass
 		// );
-		// $pass = password_hash('admin', PASSWORD_BCRYPT);
+		// $pass = password_hash('adminvillamutiarasetu', PASSWORD_BCRYPT);
 		// $data = array(
-		// 	'IdPetugas' => '',
-		// 	'NIK' => '3328112818980012',
-		// 	'NamaPetugas' => 'Zaenal Mutaqqin Subekti',
+		// 	'NIK' => '0',
+		// 	'NamaPetugas' => 'admin',
 		// 	'Username' => 'admin',
 		// 	'Passwordpetugas' => $pass
 		// );
-		// $this->v->insert($data, 'tablepetugas');
+		// $this->v->update('tablepetugas', ['IdPetugas'=>1], $data);
 		// $hasil = $this->v->getById('tablepetugas', array('Username'=>'petugas'));
 		// $cek_login = password_verify('12345', $hasil[0]['PasswordPetugas']);
 		// if($cek_login){
