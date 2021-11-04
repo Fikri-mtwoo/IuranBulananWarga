@@ -35,6 +35,7 @@ class Auth extends CI_Controller {
                         $data = array(
                             'IdPengguna' => $result['IdPengguna'],
                             'NIK' => $result['NIK'],
+                            'Nama' => $result['NamaPengguna'],
                             'status' => 'login',
                             'role'=> 'pengguna'
                         );
