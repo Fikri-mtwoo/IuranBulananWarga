@@ -51,6 +51,15 @@
                       <?php echo form_error('password')?>
                     </div>
                     <button type="submit" class="btn btn-primary btn-user btn-block">Masuk</button>
+
+                    <div class="row justify-content-center mt-3">
+                      <div class="col-12 col-md-11">
+                        <p class="text-center">Program Pengabdian Kepada Masyarakat Tahun 2021 STMIK Bani Saleh</p>
+                      </div>
+                      <div class="col-12">
+                        <img src="<?=base_url('asset/image/logo.png')?>" width="50%" class="rounded mx-auto d-block">
+                      </div>
+                    </div>
                   </form>
                 </div>
               </div>

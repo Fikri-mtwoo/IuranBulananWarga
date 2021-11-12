@@ -53,18 +53,26 @@
                     <button type="submit" class="btn btn-primary btn-user btn-block">Masuk</button>
                     <hr>
                       <div class="row">
-                          <div class="col-md">
+                          <div class="col-md mb-2">
                             <a href="<?=base_url('Auth')?>" class="btn btn-success btn-user btn-block">
                               Masuk Sebagai Warga
                             </a>
                           </div>
-                          <div class="col-md">
+                          <div class="col-md mb-3">
                             <a href="<?=base_url('Auth/petugas')?>" class="btn btn-danger btn-user btn-block">
                               Masuk Sebagai Petugas
                             </a>
                           </div>
                       </div>
                   </form>
+                  <div class="row justify-content-center">
+                    <div class="col-12 col-md-11">
+                      <p class="text-center">Program Pengabdian Kepada Masyarakat Tahun 2021 STMIK Bani Saleh</p>
+                    </div>
+                    <div class="col-12">
+                      <img src="<?=base_url('asset/image/logo.png')?>" width="50%" class="rounded mx-auto d-block">
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
