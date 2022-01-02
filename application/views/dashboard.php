@@ -35,6 +35,11 @@
                                     <?php echo form_error('nik'); ?>
                                 </div>
                                 <div class="form-group">
+                                    <label for="bulan">Tanggal Bayar</label>
+                                    <input type="date" name="tgl_bayar" class="form-control">
+                                    <?php echo form_error('tgl_bayar'); ?>
+                                </div>
+                                <div class="form-group">
                                     <label for="bulan">Bulan</label>
                                     <select class="form-control" name="bulan" id="bulan">
                                         <option value="none">Pilih Bulan</option>

@@ -514,7 +514,7 @@ public function dashboard(){
         $this->form_validation->set_error_delimiters('<small class="text-danger">', '</small>');
         $this->form_validation->set_rules('nik','Nama Warga','trim|required|callback_nik_validate');
         $this->form_validation->set_rules('bulan','Bulan','trim|required|callback_bulan_validate');
-        // $this->form_validation->set_rules('petugas','Petugas','trim|required|callback_petugas_validate');
+        $this->form_validation->set_rules('tgl_bayar','Tanggal Bayar','trim|required', array('required'=>'%s tidak boleh kosong'));
         $this->form_validation->set_rules('jmlbayar','Jumlah Bayar','trim|required', array('required'=>'Jumlah bayar tidak boleh kosong'));
         
         if($this->form_validation->run() == FALSE){
@@ -527,7 +527,7 @@ public function dashboard(){
             $idtahun        = $this->input->post('tahun',true);
             $idpetugas      = $this->session->userdata('IdPetugas');
             $jmlbayar       = $this->input->post('jmlbayar',true);
-            $tanggalbayar   = date('Y-m-d H:i:s');
+            $tanggalbayar   = $this->input->post('tgl_bayar',true);
             $IdTransaksi    = $this->encryption->decrypt($this->input->post('transaksi',true));
             $data = array(
             'IdPetugas'=> $idpetugas,
