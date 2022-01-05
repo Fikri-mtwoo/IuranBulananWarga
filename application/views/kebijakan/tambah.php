@@ -37,7 +37,12 @@
                     <div class="form-row">
                         <div class="form-group col-md-12">
                             <label for="keterangan">Keterangan</label>
-                            <textarea class="form-control" id="keterangan" name="keterangan" rows="3"></textarea>
+                            <!-- <textarea class="form-control" id="keterangan" name="keterangan" rows="3"></textarea> -->
+                            <select name="keterangan" class="form-control">
+                                <option value="">Pilih</option>
+                                <option value="gratis">Gratis</option>
+                                <option value="nitip">Nitip</option>
+                            </select>
                             <?=form_error('keterangan')?>
                         </div>
                     </div>
