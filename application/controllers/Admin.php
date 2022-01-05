@@ -68,7 +68,7 @@ public function dashboard(){
         }
         
         $this->form_validation->set_rules('nik','Nama Warga','trim|required');
-        $this->form_validation->set_rules('username','Username','trim|required');
+        $this->form_validation->set_rules('username','Username','trim|required|is_unique[tablepetugas.Username]', ['is_unique'=>'%s tersebut sudah dipakai']);
         $this->form_validation->set_rules('password','Password','trim|required');
         $this->form_validation->set_rules('role','Role','trim|required');
 
