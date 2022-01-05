@@ -17,7 +17,7 @@ class Tagihan extends CI_Controller {
         $idtransaksi = 'TRS'.date('y').''.date('m').''.date('d');
         $warga = $this->vm->getJoinTagihanWarga('tabletagihan.IdWarga, Keterangan')->result_array();
         $idiuran = $this->vm->getSelectData('MAX(IdIuran) as IdIuran','tableiuran');
-        $iuran = $this->vm->getSelectWhereData('IdIuran','tableiuran',['IdIuran'=>$idiuran[0]['IdIuran']]);
+        $iuran = $this->vm->getSelectWhereData('IdIuran,TotalIuran','tableiuran',['IdIuran'=>$idiuran[0]['IdIuran']]);
         $tahun = $this->vm->getSelectWhereData('IdTahunIuran','tabletahuniuran',['IdTahunIuran'=>$this->vm->getSelectData('MAX(IdTahunIuran) as IdTahunIuran','tabletahuniuran')[0]['IdTahunIuran']]);
         $no=1;
         $data = [];
@@ -25,20 +25,44 @@ class Tagihan extends CI_Controller {
         if($cek < 1){
             foreach ($warga as $wrg) {
                 if($wrg['Keterangan'] !== null){
-                    $data [] = [
-                        'IdTransaksi' => $idtransaksi."".$wrg['IdWarga'],
-                        'IdWarga' => $wrg['IdWarga'],
-                        'NIK' => null,
-                        'IdIuran' =>$iuran[0]['IdIuran'],
-                        'IdBulan' => date('m'),
-                        'IdTahun' => date('Y'),
-                        'IdPetugas' => $this->session->userdata('IdPetugas'),
-                        'JmlBayar' => 0,
-                        'TanggalBayar' => date('Y-m-d H:i:s'),
-                        'InputTransaksi' => date('Y-m-d H:i:s'),
-                        'Keterangan' => 'Gratis'
-        
-                    ];
+                    switch ($wrg['Keterangan']) {
+                        case 'gratis':
+                            $data [] = [
+                                'IdTransaksi' => $idtransaksi."".$wrg['IdWarga'],
+                                'IdWarga' => $wrg['IdWarga'],
+                                'NIK' => null,
+                                'IdIuran' =>$iuran[0]['IdIuran'],
+                                'IdBulan' => date('m'),
+                                'IdTahun' => date('Y'),
+                                'IdPetugas' => $this->session->userdata('IdPetugas'),
+                                'JmlBayar' => 0,
+                                'TanggalBayar' => date('Y-m-d H:i:s'),
+                                'InputTransaksi' => date('Y-m-d H:i:s'),
+                                'Keterangan' => 'Gratis'
+                
+                            ];
+                            break;
+                        case 'nitip':
+                            $data [] = [
+                                'IdTransaksi' => $idtransaksi."".$wrg['IdWarga'],
+                                'IdWarga' => $wrg['IdWarga'],
+                                'NIK' => null,
+                                'IdIuran' =>$iuran[0]['IdIuran'],
+                                'IdBulan' => date('m'),
+                                'IdTahun' => date('Y'),
+                                'IdPetugas' => $this->session->userdata('IdPetugas'),
+                                'JmlBayar' => $iuran[0]['TotalIuran'],
+                                'TanggalBayar' => date('Y-m-d H:i:s'),
+                                'InputTransaksi' => date('Y-m-d H:i:s'),
+                                'Keterangan' => null
+                
+                            ];
+                            break;
+                        
+                        default:
+                            # code...
+                            break;
+                    }
                 }else{
                     $data [] = [
                         'IdTransaksi' => $idtransaksi."".$wrg['IdWarga'],
