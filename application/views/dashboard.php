@@ -36,7 +36,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="bulan">Tanggal Bayar</label>
-                                    <input type="date" name="tgl_bayar" class="form-control">
+                                    <input type="datetime-local" name="tgl_bayar" class="form-control">
                                     <?php echo form_error('tgl_bayar'); ?>
                                 </div>
                                 <div class="form-group">
